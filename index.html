@@ -1068,7 +1068,7 @@ async function toggleHint(id){
   hc.innerHTML='<span class="spin">⏳</span> AI가 힌트를 생성 중입니다...';
   try{
     const workerUrl=localStorage.getItem('worker_url')||'/api/proxy';
-    const res=await fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:`초등학교 5~6학년 AI·SW사고력올림피아드 대비 문제입니다.
+    const res=await fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({accessToken:'quvia2025',model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:`초등학교 5~6학년 AI·SW사고력올림피아드 대비 문제입니다.
 
 문제 제목: ${qt}
 문제 내용: ${qbody.substring(0,300)}
@@ -1112,7 +1112,7 @@ async function evalAnswer(aid, label, qtext){
       msgContent=prompt;
     }
 
-    const res=await fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:800,messages:[{role:'user',content:msgContent}]})});
+    const res=await fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({accessToken:'quvia2025',model:'claude-haiku-4-5-20251001',max_tokens:800,messages:[{role:'user',content:msgContent}]})});
     const d=await res.json();
     const raw=d.content?.[0]?.text||'';
     const scoreM=raw.match(/⭐\s*점수:\s*([\d.]+)\s*\/\s*10/);
