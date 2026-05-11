@@ -3,9 +3,6 @@ export const config = {
 };
 
 export default async function handler(req, res) {
-  // ... 기존 내용 그대로
-
-export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -14,7 +11,11 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
   try {
-    const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+    let body = req.body;
+    if (typeof body === 'string') {
+      body = JSON.parse(body);
+    }
+
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -24,9 +25,12 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify(body)
     });
-    const data = await response.json();
-    res.status(response.status).json(data);
+
+    const text = await response.text();
+    res.setHeader('Content-Type', 'application/json');
+    res.status(response.status).send(text);
+
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    res.status(500).json({ error: e.message, stack: e.stack });
   }
 }
