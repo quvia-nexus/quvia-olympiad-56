@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI·SW사고력올림피아드 | 초등 5~6학년 대비 | Quvia-Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#071A14;--card:#0F2E22;--card2:#163D2D;
+  --gr:#00D084;--gr2:#00A866;--cy:#4FFFDB;
+  --gold:#F5C842;--bl:#4A9EFF;--pu:#B06FFF;--or:#FF8C42;--red:#FF4F6B;
+  --tx:#DFF5EC;--tx2:#7DB89A;--brd:rgba(0,208,132,0.12);--r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse at 10% 10%,rgba(0,208,132,0.07) 0%,transparent 55%),
+             radial-gradient(ellipse at 90% 85%,rgba(79,255,219,0.05) 0%,transparent 55%);}
+/* HEADER */
+header{position:sticky;top:0;z-index:100;background:rgba(7,26,20,0.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd);}
+.hi{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:12px;height:62px;}
+.logo{font-size:18px;font-weight:900;letter-spacing:-.5px;background:linear-gradient(135deg,var(--gr),var(--cy));-webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap;}
+.gbadge{padding:4px 12px;border-radius:20px;background:rgba(0,208,132,0.15);border:1px solid rgba(0,208,132,0.3);font-size:11px;font-weight:700;color:var(--gr);white-space:nowrap;}
+.hr2{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.dday{display:flex;align-items:center;gap:6px;background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.25);border-radius:20px;padding:5px 14px;font-size:12px;color:var(--gold);font-weight:700;}
+#cd{font-size:17px;font-family:'JetBrains Mono';}
+.hbtn{display:flex;align-items:center;gap:5px;padding:7px 13px;border-radius:18px;border:1px solid var(--brd);background:transparent;color:var(--tx2);cursor:pointer;font-size:12px;font-family:'Noto Sans KR';transition:all .2s;white-space:nowrap;}
+.hbtn:hover{border-color:var(--gr);color:var(--gr);}
+/* NAV */
+.mn{position:sticky;top:62px;z-index:90;background:rgba(7,26,20,0.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--brd);}
+.ni{max-width:1200px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none;}
+.ni::-webkit-scrollbar{display:none;}
+.nt{padding:14px 22px;border:none;background:transparent;color:var(--tx2);cursor:pointer;font-family:'Noto Sans KR';font-size:13px;font-weight:500;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;}
+.nt:hover{color:var(--tx);}
+.nt.active{color:var(--gr);border-bottom-color:var(--gr);font-weight:700;}
+#sn{display:none;background:rgba(7,26,20,0.85);border-bottom:1px solid var(--brd);}
+.snv{max-width:1200px;margin:0 auto;padding:10px 20px;display:flex;gap:6px;flex-wrap:wrap;}
+.sb{padding:4px 13px;border-radius:18px;border:1px solid var(--brd);background:transparent;color:var(--tx2);cursor:pointer;font-size:12px;font-family:'Noto Sans KR';transition:all .2s;}
+.sb:hover{border-color:var(--cy);color:var(--cy);}
+.sb.active{background:var(--gr2);color:#fff;border-color:var(--gr2);}
+#ct{max-width:1200px;margin:0 auto;padding:20px 20px 130px;}
+/* HOME */
+.home-wrap{max-width:820px;margin:0 auto;padding:30px 0 10px;}
+.home-title{text-align:center;margin-bottom:28px;}
+.home-title h2{font-size:28px;font-weight:900;margin-bottom:10px;background:linear-gradient(135deg,var(--gr),var(--cy));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.home-title p{color:var(--tx2);font-size:14px;line-height:1.8;}
+.pbo{height:7px;background:rgba(255,255,255,0.08);border-radius:4px;margin:20px 0 6px;}
+.pbi{height:100%;background:linear-gradient(90deg,var(--gr),var(--cy));border-radius:4px;transition:width .5s;}
+.pi{display:flex;justify-content:space-between;font-size:12px;color:var(--tx2);margin-bottom:28px;}
+.info-section{background:var(--card);border:1px solid var(--brd);border-radius:var(--r);padding:22px 26px;margin-bottom:16px;}
+.info-section-title{font-size:13px;font-weight:700;color:var(--gr);margin-bottom:16px;display:flex;align-items:center;gap:8px;letter-spacing:.5px;}
+.info-section-title::after{content:'';flex:1;height:1px;background:var(--brd);}
+.prob-list{display:flex;flex-direction:column;gap:6px;}
+.prob-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.prob-item:last-child{border-bottom:none;padding-bottom:0;}
+.prob-badge{flex-shrink:0;padding:3px 10px;border-radius:18px;font-size:11px;font-weight:700;height:fit-content;margin-top:1px;}
+.prob-badge.past{background:rgba(74,158,255,0.18);color:var(--bl);}
+.prob-badge.ai{background:rgba(176,111,255,0.18);color:var(--pu);}
+.prob-badge.sw{background:rgba(79,255,219,0.15);color:var(--cy);}
+.prob-desc{font-size:13px;color:var(--tx2);line-height:1.7;}
+.prob-desc strong{color:var(--tx);font-weight:600;}
+.feat-table{width:100%;border-collapse:collapse;}
+.feat-table tr{border-bottom:1px solid rgba(255,255,255,0.05);}
+.feat-table tr:last-child{border-bottom:none;}
+.feat-table td{padding:10px 8px;vertical-align:top;}
+.feat-icon-cell{width:36px;font-size:18px;text-align:center;padding-right:4px;}
+.feat-name{font-size:13px;font-weight:700;color:var(--tx);width:100px;}
+.feat-desc{font-size:13px;color:var(--tx2);line-height:1.6;}
+.how-list{display:flex;flex-direction:column;gap:10px;}
+.how-item{display:flex;align-items:flex-start;gap:12px;}
+.how-num{width:24px;height:24px;border-radius:50%;background:rgba(0,208,132,0.2);border:1px solid rgba(0,208,132,0.4);color:var(--gr);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.how-text{font-size:13px;color:var(--tx2);line-height:1.7;}
+.how-text strong{color:var(--tx);}
+/* QUESTION CARD */
+.qc{background:var(--card);border:1px solid var(--brd);border-radius:var(--r);padding:0;margin-bottom:14px;animation:fu .3s ease;transition:border-color .2s;overflow:hidden;}
+.qc:hover{border-color:rgba(0,208,132,0.2);}
+.qc.bm{border-left:3px solid var(--gold);border-color:rgba(245,200,66,0.3);}
+@keyframes fu{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.qc-head{padding:18px 22px 14px;border-bottom:1px solid rgba(255,255,255,0.05);}
+.qh{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;}
+.qn{min-width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:10px;font-weight:900;font-size:13px;flex-shrink:0;}
+.qn.g{background:rgba(0,208,132,0.18);color:var(--gr);}
+.qn.c{background:rgba(79,255,219,0.15);color:var(--cy);}
+.qn.d{background:rgba(245,200,66,0.18);color:var(--gold);}
+.qn.b{background:rgba(74,158,255,0.18);color:var(--bl);}
+.qn.p{background:rgba(176,111,255,0.18);color:var(--pu);}
+.qt{font-size:14px;font-weight:700;line-height:1.6;flex:1;color:var(--tx);}
+.qa{display:flex;gap:6px;margin-left:auto;flex-shrink:0;}
+.ib{width:30px;height:30px;border-radius:8px;border:1px solid var(--brd);background:transparent;color:var(--tx2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .2s;}
+.ib:hover{border-color:var(--gold);color:var(--gold);}
+.ib.on{background:rgba(245,200,66,0.18);border-color:var(--gold);color:var(--gold);}
+.qm{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.tg{padding:3px 9px;border-radius:18px;font-size:10px;font-weight:700;letter-spacing:.3px;}
+.ta{background:rgba(176,111,255,0.2);color:var(--pu);}
+.talg{background:rgba(79,255,219,0.15);color:var(--cy);}
+.tdt{background:rgba(74,158,255,0.18);color:var(--bl);}
+.tet{background:rgba(255,140,66,0.2);color:var(--or);}
+.tds{background:rgba(0,208,132,0.18);color:var(--gr);}
+.tlg{background:rgba(245,200,66,0.18);color:var(--gold);}
+/* BODY */
+.qbody{padding:14px 22px;background:rgba(0,208,132,0.03);border-bottom:1px solid rgba(255,255,255,0.05);}
+.qbody-text{font-size:13.5px;line-height:1.9;color:var(--tx);white-space:pre-line;}
+/* TABLE */
+.dtb{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;border-radius:8px;overflow:hidden;}
+.dtb th{background:rgba(0,208,132,0.15);color:var(--gr);padding:8px 12px;text-align:center;font-weight:700;border:1px solid rgba(0,208,132,0.2);}
+.dtb td{padding:7px 12px;text-align:center;border:1px solid var(--brd);color:var(--tx2);}
+.dtb tr:hover td{background:rgba(255,255,255,0.03);}
+/* HINT */
+.hp{margin:0 22px 0;background:rgba(245,200,66,0.05);border:1px solid rgba(245,200,66,0.2);border-radius:10px;padding:13px 15px;display:none;font-size:13px;line-height:1.8;color:var(--tx);}
+.hp.vis{display:block;}
+.hl{font-size:10px;font-weight:700;color:var(--gold);margin-bottom:8px;letter-spacing:1px;}
+/* SUB QUESTIONS */
+.qc-subs{padding:0 22px 18px;}
+.sq{margin-top:14px;background:rgba(0,208,132,0.04);border:1px solid rgba(0,208,132,0.1);border-radius:10px;border-left:3px solid var(--card2);padding:12px 16px;}
+.sl{font-size:11px;font-weight:700;color:var(--gr);margin-bottom:6px;letter-spacing:.3px;}
+.st{font-size:13px;line-height:1.75;color:var(--tx2);margin-bottom:9px;font-weight:500;}
+.ans-row{position:relative;}
+.aa{width:100%;min-height:90px;background:rgba(255,255,255,0.03);border:1px solid var(--brd);border-radius:8px;padding:10px 13px;color:var(--tx);font-family:'Noto Sans KR';font-size:13px;line-height:1.7;resize:vertical;transition:border-color .2s;}
+.aa:focus{outline:none;border-color:var(--gr);}
+.aa::placeholder{color:rgba(125,184,154,0.35);}
+.ans-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:6px;}
+.cc{font-size:10px;color:var(--tx2);}
+/* AI EVAL BUTTON */
+.eval-btn{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:14px;border:1px solid rgba(74,158,255,0.3);background:rgba(74,158,255,0.08);color:var(--bl);cursor:pointer;font-size:11px;font-family:'Noto Sans KR';font-weight:600;transition:all .2s;white-space:nowrap;}
+.eval-btn:hover{background:rgba(74,158,255,0.18);border-color:var(--bl);}
+.eval-btn:disabled{opacity:.5;cursor:not-allowed;}
+/* AI EVAL PANEL */
+.eval-panel{margin-top:10px;border-radius:10px;border:1px solid rgba(74,158,255,0.25);background:rgba(74,158,255,0.05);padding:14px 16px;display:none;font-size:13px;line-height:1.8;}
+.eval-panel.vis{display:block;}
+.eval-header{font-size:11px;font-weight:700;color:var(--bl);margin-bottom:10px;letter-spacing:1px;display:flex;align-items:center;gap:6px;}
+.eval-score{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:10px 14px;background:rgba(74,158,255,0.1);border-radius:8px;}
+.eval-score-num{font-size:26px;font-weight:900;color:var(--bl);font-family:'JetBrains Mono';}
+.eval-score-label{font-size:12px;color:var(--tx2);}
+.eval-stars{font-size:18px;letter-spacing:2px;}
+.eval-block{margin-bottom:10px;}
+.eval-block-title{font-size:11px;font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:5px;}
+.eval-block-title.good{color:#2ECC71;}
+.eval-block-title.improve{color:var(--gold);}
+.eval-block-title.add{color:var(--pu);}
+.eval-block-body{font-size:12.5px;color:var(--tx2);line-height:1.75;padding-left:16px;}
+.eval-loading{color:var(--tx2);font-style:italic;display:flex;align-items:center;gap:8px;}
+.spin{display:inline-block;animation:spin .8s linear infinite;}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+/* FLOAT BAR */
+#fb{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;background:rgba(7,26,20,0.97);backdrop-filter:blur(20px);border:1px solid rgba(0,208,132,0.2);border-radius:28px;padding:9px 16px;box-shadow:0 8px 40px rgba(0,0,0,0.7);z-index:200;}
+.fb{display:flex;align-items:center;gap:5px;padding:7px 14px;border-radius:18px;border:1px solid var(--brd);background:transparent;color:var(--tx2);cursor:pointer;font-family:'Noto Sans KR';font-size:12px;font-weight:500;transition:all .2s;white-space:nowrap;}
+.fb:hover{border-color:var(--gr);color:var(--gr);}
+.fb.em{background:var(--gr);color:#071A14;border-color:var(--gr);font-weight:700;}
+.fd{width:1px;height:22px;background:var(--brd);}
+#td{font-family:'JetBrains Mono';font-size:14px;color:var(--gold);font-weight:700;min-width:52px;text-align:center;display:none;}
+#td.w{color:var(--red);animation:bl 1s infinite;}
+@keyframes bl{50%{opacity:.5;}}
+#pr{width:34px;height:34px;flex-shrink:0;}
+/* MODAL */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s;}
+.mo.open{opacity:1;pointer-events:all;}
+.mdl{background:var(--card);border:1px solid var(--brd);border-radius:20px;width:100%;max-width:820px;max-height:90vh;overflow-y:auto;transform:translateY(18px);transition:transform .3s;scrollbar-width:thin;scrollbar-color:var(--card2) transparent;}
+.mo.open .mdl{transform:translateY(0);}
+.mh{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--brd);position:sticky;top:0;background:var(--card);z-index:10;}
+.mt{font-size:17px;font-weight:800;}
+.mc{width:34px;height:34px;border-radius:50%;border:1px solid var(--brd);background:transparent;color:var(--tx2);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.mc:hover{border-color:var(--red);color:var(--red);}
+.mb{padding:24px;}
+.fs{margin-bottom:26px;}
+.fs h3{font-size:13px;font-weight:700;color:var(--gr);margin-bottom:13px;}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px;}
+.sc{background:rgba(255,255,255,0.04);border:1px solid var(--brd);border-radius:11px;padding:15px 10px;text-align:center;transition:border-color .2s;}
+.sc:hover{border-color:var(--gr);}
+.sn2{font-size:11px;font-weight:700;color:var(--tx);margin-bottom:3px;}
+.sd2{font-size:10px;color:var(--tx2);line-height:1.5;}
+.fe{background:rgba(255,255,255,0.03);border:1px solid var(--brd);border-radius:11px;padding:20px;}
+.fctips{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:9px;}
+.fctip{background:rgba(0,208,132,0.05);border:1px solid rgba(0,208,132,0.18);border-radius:9px;padding:11px;font-size:12px;line-height:1.6;}
+.fctip strong{color:var(--gr);display:block;margin-bottom:3px;}
+.tp{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0;}
+.tb{padding:7px 15px;border-radius:18px;border:1px solid var(--brd);background:transparent;color:var(--tx2);cursor:pointer;font-size:12px;font-family:'Noto Sans KR';transition:all .2s;}
+.tb:hover,.tb.sel{background:rgba(0,208,132,0.18);border-color:var(--gr);color:var(--gr);}
+.ti{width:72px;padding:7px 10px;background:rgba(255,255,255,0.06);border:1px solid var(--brd);border-radius:8px;color:var(--tx);font-size:14px;font-family:'JetBrains Mono';text-align:center;}
+.tl{font-size:12px;color:var(--tx2);}
+#toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:rgba(0,168,102,0.9);color:#fff;padding:9px 18px;border-radius:18px;font-size:12px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .3s;z-index:999;}
+#toast.show{opacity:1;}
+.sh{display:flex;align-items:center;gap:10px;padding:12px 0 6px;margin-bottom:4px;}
+.sh-t{font-size:15px;font-weight:700;}
+.sh-c{padding:2px 9px;border-radius:18px;background:rgba(255,255,255,0.08);font-size:11px;color:var(--tx2);}
+@media print{header,#fb,.mn,#sn,.qm,.qa,.hp,.eval-panel,.eval-btn{display:none!important;}body{background:#fff;color:#000;}.qc{border:1px solid #ccc;break-inside:avoid;}.aa{min-height:110px;border:1px solid #aaa;background:#fff;}.qbody-text,.st{color:#000;}}
+@media(max-width:600px){.hi .gbadge{display:none;}.fb span{display:none;}#fb{padding:8px 12px;gap:6px;}.feat-name{width:80px;}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hi">
+    <div class="logo">🟢 AI·SW사고력올림피아드</div>
+    <div class="gbadge">초등학교 5~6학년</div>
+    <div class="hr2">
+      <div class="dday">📅 D-<span id="cd">—</span></div>
+      <button class="hbtn" onclick="openModal('apim')">⚙️ AI 설정</button>
+      <button class="hbtn" onclick="openModal('fcm')">📐 순서도 가이드</button>
+      <button class="hbtn" onclick="window.print()">🖨️ 인쇄</button>
+    </div>
+  </div>
+</header>
+<nav class="mn">
+  <div class="ni">
+    <button class="nt active" onclick="sw('home',this)">🏠 홈</button>
+    <button class="nt" onclick="sw('past',this)">📚 기출문제 1~9회</button>
+    <button class="nt" onclick="sw('ai',this)">🤖 AI 예상문제 (10선)</button>
+    <button class="nt" onclick="sw('sw2',this)">⚙️ SW 예상문제 (10선)</button>
+  </div>
+</nav>
+<div id="sn"><div class="snv" id="rn"></div></div>
+<div id="ct"></div>
+<div id="fb">
+  <button class="fb" onclick="openModal('tmm')">⏱️ <span>타이머</span></button>
+  <div id="td">00:00</div>
+  <button id="tsb" onclick="toggleTimer()" style="display:none" class="fb">▶</button>
+  <div class="fd"></div>
+  <svg id="pr" viewBox="0 0 36 36">
+    <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/>
+    <circle id="pc" cx="18" cy="18" r="15" fill="none" stroke="#00D084" stroke-width="3"
+      stroke-dasharray="94.25" stroke-dashoffset="94.25" stroke-linecap="round" transform="rotate(-90 18 18)"/>
+    <text x="18" y="22" text-anchor="middle" font-size="9" fill="#00D084" font-family="JetBrains Mono" font-weight="700" id="pt">0%</text>
+  </svg>
+  <div class="fd"></div>
+  <button class="fb em" onclick="openModal('fcm')">📐 <span>순서도 가이드</span></button>
+</div>
+<!-- FLOWCHART MODAL -->
+<div class="mo" id="fcm">
+<div class="mdl">
+  <div class="mh"><div class="mt">📐 순서도 완전 정복 가이드</div><button class="mc" onclick="closeModal('fcm')">✕</button></div>
+  <div class="mb">
+    <div class="fs">
+      <h3>① 5가지 기본 기호</h3>
+      <div class="sg">
+        <div class="sc"><svg width="80" height="38" viewBox="0 0 80 38" style="margin:0 auto 9px;display:block;"><ellipse cx="40" cy="19" rx="37" ry="16" fill="none" stroke="#00D084" stroke-width="2"/><text x="40" y="24" text-anchor="middle" fill="#00D084" font-size="12" font-weight="700">시작/끝</text></svg><div class="sn2">타원 (단말)</div><div class="sd2">시작과 끝 — 반드시 있어야 함!</div></div>
+        <div class="sc"><svg width="80" height="38" viewBox="0 0 80 38" style="margin:0 auto 9px;display:block;"><rect x="4" y="5" width="72" height="28" rx="3" fill="none" stroke="#4A9EFF" stroke-width="2"/><text x="40" y="24" text-anchor="middle" fill="#4A9EFF" font-size="11" font-weight="700">처리/계산</text></svg><div class="sn2">직사각형 (처리)</div><div class="sd2">계산·동작·처리 과정</div></div>
+        <div class="sc"><svg width="80" height="48" viewBox="0 0 80 48" style="margin:0 auto 9px;display:block;"><polygon points="40,2 76,24 40,46 4,24" fill="none" stroke="#B06FFF" stroke-width="2"/><text x="40" y="28" text-anchor="middle" fill="#B06FFF" font-size="10" font-weight="700">조건?</text></svg><div class="sn2">마름모 (판단)</div><div class="sd2">Yes/No 분기 조건문</div></div>
+        <div class="sc"><svg width="80" height="38" viewBox="0 0 80 38" style="margin:0 auto 9px;display:block;"><polygon points="12,5 76,5 68,33 4,33" fill="none" stroke="#4FFFDB" stroke-width="2"/><text x="40" y="23" text-anchor="middle" fill="#4FFFDB" font-size="10" font-weight="700">입력/출력</text></svg><div class="sn2">평행사변형 (I/O)</div><div class="sd2">데이터 입력·결과 출력</div></div>
+        <div class="sc"><svg width="60" height="46" viewBox="0 0 60 46" style="margin:0 auto 9px;display:block;"><line x1="30" y1="4" x2="30" y2="38" stroke="#F5C842" stroke-width="2"/><polygon points="22,32 30,44 38,32" fill="#F5C842"/></svg><div class="sn2">화살표 (흐름선)</div><div class="sd2">진행 방향 연결</div></div>
+      </div>
+    </div>
+    <div class="fs">
+      <h3>② 실전 예시 — "드론 택배 배달" 순서도</h3>
+      <div class="fe">
+        <svg width="300" height="450" viewBox="0 0 300 450" style="margin:0 auto;display:block;">
+          <ellipse cx="150" cy="26" rx="58" ry="20" fill="none" stroke="#00D084" stroke-width="2"/>
+          <text x="150" y="31" text-anchor="middle" fill="#00D084" font-size="12" font-weight="700">시작</text>
+          <line x1="150" y1="46" x2="150" y2="62" stroke="#555" stroke-width="1.5"/><polygon points="144,58 150,68 156,58" fill="#555"/>
+          <rect x="55" y="70" width="190" height="32" rx="4" fill="none" stroke="#4A9EFF" stroke-width="1.5"/>
+          <text x="150" y="91" text-anchor="middle" fill="#4A9EFF" font-size="11">판매자가 목적지 좌표 입력</text>
+          <line x1="150" y1="102" x2="150" y2="118" stroke="#555" stroke-width="1.5"/><polygon points="144,114 150,124 156,114" fill="#555"/>
+          <rect x="55" y="126" width="190" height="32" rx="4" fill="none" stroke="#4A9EFF" stroke-width="1.5"/>
+          <text x="150" y="147" text-anchor="middle" fill="#4A9EFF" font-size="11">AI가 최적 경로 탐색</text>
+          <line x1="150" y1="158" x2="150" y2="174" stroke="#555" stroke-width="1.5"/><polygon points="144,170 150,180 156,170" fill="#555"/>
+          <polygon points="150,182 232,214 150,246 68,214" fill="none" stroke="#B06FFF" stroke-width="1.5"/>
+          <text x="150" y="218" text-anchor="middle" fill="#B06FFF" font-size="10">장애물 있나요?</text>
+          <text x="242" y="218" fill="#FF6B8A" font-size="10" font-weight="700">Yes</text>
+          <text x="155" y="259" fill="#00D084" font-size="10" font-weight="700">No</text>
+          <line x1="232" y1="214" x2="265" y2="214" stroke="#555" stroke-width="1.5"/>
+          <line x1="265" y1="214" x2="265" y2="143" stroke="#555" stroke-width="1.5"/>
+          <line x1="265" y1="143" x2="245" y2="143" stroke="#555" stroke-width="1.5"/>
+          <polygon points="249,137 239,143 249,149" fill="#555"/>
+          <text x="271" y="183" fill="#FF6B8A" font-size="9">우회</text><text x="271" y="195" fill="#FF6B8A" font-size="9">재탐색</text>
+          <line x1="150" y1="246" x2="150" y2="270" stroke="#555" stroke-width="1.5"/><polygon points="144,266 150,276 156,266" fill="#555"/>
+          <rect x="55" y="278" width="190" height="32" rx="4" fill="none" stroke="#4A9EFF" stroke-width="1.5"/>
+          <text x="150" y="299" text-anchor="middle" fill="#4A9EFF" font-size="11">드론 이동 + 수신자에게 알림</text>
+          <line x1="150" y1="310" x2="150" y2="326" stroke="#555" stroke-width="1.5"/><polygon points="144,322 150,332 156,322" fill="#555"/>
+          <polygon points="150,334 228,362 150,390 72,362" fill="none" stroke="#B06FFF" stroke-width="1.5"/>
+          <text x="150" y="366" text-anchor="middle" fill="#B06FFF" font-size="10">목적지 도착?</text>
+          <text x="236" y="366" fill="#FF6B8A" font-size="10">No→계속</text>
+          <line x1="150" y1="390" x2="150" y2="406" stroke="#555" stroke-width="1.5"/><polygon points="144,402 150,412 156,402" fill="#555"/>
+          <ellipse cx="150" cy="428" rx="58" ry="20" fill="none" stroke="#00D084" stroke-width="2"/>
+          <text x="150" y="433" text-anchor="middle" fill="#00D084" font-size="12" font-weight="700">끝</text>
+        </svg>
+      </div>
+    </div>
+    <div class="fs">
+      <h3>③ 텍스트 순서도 — 시험지에 빠르게 쓰기</h3>
+      <div class="fe" style="text-align:left;font-family:'Noto Sans KR';font-size:13px;line-height:2.5;">
+        <span style="color:#00D084;font-weight:700;">[시작]</span><br>
+        &emsp;↓<br>
+        <span style="color:#4A9EFF;">[학생 알레르기 정보 불러오기]</span><br>
+        &emsp;↓<br>
+        <span style="color:#B06FFF;">◇ 오늘 급식에 위험 성분 포함?</span><br>
+        &emsp;&emsp;→ <span style="color:#FF6B8A;">Yes:</span> <span style="color:#4A9EFF;">[경고음 + 빨간 LED 점등]</span><br>
+        &emsp;&emsp;→ <span style="color:#00D084;">No:</span>&nbsp;<span style="color:#4A9EFF;">[정상 배식 진행]</span><br>
+        &emsp;↓<br>
+        <span style="color:#00D084;font-weight:700;">[끝]</span>
+      </div>
+    </div>
+    <div class="fs">
+      <h3>④ 시험 꿀팁</h3>
+      <div class="fctips">
+        <div class="fctip"><strong>✅ 기호를 정확하게!</strong>조건은 반드시 마름모(◇). 직사각형에 Yes/No 쓰면 감점.</div>
+        <div class="fctip"><strong>✅ Yes/No 화살표 표시!</strong>마름모 두 화살표에 반드시 Yes/No 표기.</div>
+        <div class="fctip"><strong>✅ 시작·끝 타원 필수!</strong>타원으로 시작, 타원으로 끝내야 완성.</div>
+        <div class="fctip"><strong>✅ 반복은 화살표 위로!</strong>반복 구조는 위 단계로 화살표 재연결.</div>
+        <div class="fctip"><strong>✅ 고득점 포인트!</strong>판단+반복+입출력이 모두 있으면 최고점!</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- TIMER MODAL -->
+<div class="mo" id="tmm">
+<div class="mdl" style="max-width:380px;">
+  <div class="mh"><div class="mt">⏱️ 타이머 설정</div><button class="mc" onclick="closeModal('tmm')">✕</button></div>
+  <div class="mb">
+    <p style="color:var(--tx2);font-size:13px;margin-bottom:14px;">실전 시험처럼 시간을 정해 연습하세요!</p>
+    <div style="font-size:12px;color:var(--tx2);margin-bottom:6px;">빠른 선택:</div>
+    <div class="tp">
+      <button class="tb" onclick="setT(30)">30분</button>
+      <button class="tb sel" onclick="setT(60)">1시간</button>
+      <button class="tb" onclick="setT(90)">1시간30분</button>
+      <button class="tb" onclick="setT(120)">2시간</button>
+    </div>
+    <div style="font-size:12px;color:var(--tx2);margin:10px 0 5px;">직접 입력:</div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+      <input class="ti" id="th" type="number" min="0" max="5" value="1">
+      <span class="tl">시간</span>
+      <input class="ti" id="tm" type="number" min="0" max="59" value="0">
+      <span class="tl">분</span>
+    </div>
+    <button class="fb em" style="width:100%;justify-content:center;padding:12px;" onclick="startT()">⏱️ 타이머 시작</button>
+  </div>
+</div>
+</div>
+<div id="toast">✓ 자동 저장됨</div>
+
+<!-- WORKER URL MODAL -->
+<div class="mo" id="apim">
+<div class="mdl" style="max-width:460px;">
+  <div class="mh"><div class="mt">⚙️ AI 서버 연결 설정</div><button class="mc" onclick="closeModal('apim')">✕</button></div>
+  <div class="mb">
+    <p style="color:var(--tx2);font-size:13px;line-height:1.7;margin-bottom:16px;">
+      선생님이 알려주신 <strong style="color:var(--cy);">Cloudflare Worker 주소</strong>를 입력하면<br>
+      💡 AI 힌트와 🤖 AI 평가 기능을 사용할 수 있습니다.
+    </p>
+    <div style="font-size:12px;color:var(--tx2);margin-bottom:6px;">Worker 주소 입력:</div>
+    <input id="apikey-input" type="text" placeholder="https://quvia-ai.your-id.workers.dev" 
+      style="width:100%;padding:10px 14px;background:rgba(255,255,255,0.06);border:1px solid var(--brd);border-radius:8px;color:var(--tx);font-size:13px;font-family:'JetBrains Mono';margin-bottom:12px;">
+    <button class="fb em" style="width:100%;justify-content:center;padding:12px;" onclick="saveApiKey()">✅ 저장하고 사용하기</button>
+    <div id="apikey-status" style="margin-top:10px;font-size:12px;text-align:center;"></div>
+    <div style="margin-top:14px;padding:12px;background:rgba(79,255,219,0.05);border:1px solid rgba(79,255,219,0.15);border-radius:8px;font-size:12px;color:var(--tx2);line-height:1.7;">
+      <strong style="color:var(--cy);">Worker 주소가 없어도 괜찮아요!</strong><br>
+      문제 학습, 답안 작성, 북마크, 타이머, 인쇄 기능은<br>주소 없이도 정상적으로 사용할 수 있습니다.
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- API KEY BANNER (shown when key not set) -->
+<div id="apikey-banner" style="display:none;position:fixed;top:62px;left:0;right:0;z-index:85;background:rgba(245,200,66,0.12);border-bottom:1px solid rgba(245,200,66,0.25);padding:8px 20px;text-align:center;font-size:12px;color:var(--gold);">
+  ⚙️ AI 힌트·평가 기능을 사용하려면 선생님이 알려주신 Worker 주소를 설정하세요.
+  <button onclick="openModal('apim')" style="margin-left:10px;padding:3px 12px;border-radius:12px;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer;font-size:11px;font-family:'Noto Sans KR';">주소 설정</button>
+  <button onclick="document.getElementById('apikey-banner').style.display='none'" style="margin-left:6px;padding:3px 8px;border-radius:12px;border:1px solid rgba(245,200,66,0.3);background:transparent;color:var(--tx2);cursor:pointer;font-size:11px;">닫기</button>
+</div>
+<script>
+const PAST=[
+  {round:1,qs:[
+    {n:'[2]',col:'g',title:'학급 이름 정하기 — 번호식 vs 꽃이름식',
+     body:`우리 학교에서 새 학년이 시작되어 5학년 전체를 5개 반으로 나누어 학급의 이름을 정하려고 한다.
+학급 이름을 붙이는 두 가지 방법이 있다.
+
+  방법 ① 번호식   :  1반, 2반, 3반, 4반, 5반
+  방법 ② 꽃이름식 :  장미반, 국화반, 튤립반, 해바라기반, 백합반`,
+     tags:['ds'],subs:[
+      {l:'2-1',t:'방법 ①(번호식)과 방법 ②(꽃이름식)로 분류할 경우 각 방법의 좋은 점과 나쁜 점을 구체적으로 설명하시오.'},
+      {l:'2-2',t:'번호식과 꽃이름식 외에 나만의 새로운 학급 이름 붙이기 방법을 만들어 보시오. 방법의 이름과 구체적인 예시를 함께 쓰시오.'},
+    ]},
+    {n:'[3]',col:'c',title:'식물원 관찰 기사 작성',
+     body:`나는 전문 사진사이자 인터넷 잡지 기자이다.
+식물원에 있는 여러 식물을 관찰하고 사진을 찍은 후 관련 기사를 작성하려고 한다.`,
+     tags:['ds'],subs:[
+      {l:'3',t:'아래 조건을 참고하여 사진과 연관된 기사를 자유롭게 작성해 보시오.
+[조건] 식물의 이름, 특징, 사진을 찍게 된 이유, 느낀 점이 담겨 있으면 좋다.'},
+    ]},
+  ]},
+  {round:2,qs:[
+    {n:'[2]',col:'g',title:'온라인 게임 중독 진단 방법 설계',
+     body:`학생들을 대상으로 온라인 게임 중독인지를 진단하고자 한다.
+1학년부터 6학년까지 매해 반복적으로 진단해야 하며, 학생마다 결과가 다를 수 있다.`,
+     tags:['ds','dt'],subs:[
+      {l:'2',t:'해마다 진단할 경우, 어떤 방법으로 진단하면 효과적인지 구체적으로 기술하시오.
+(진단 항목, 방법, 결과 활용 방법을 포함하여 서술하시오.)'},
+    ]},
+    {n:'[3]',col:'c',title:'진로 추천 소프트웨어 설계',
+     body:`학생들의 진로를 추천해주는 소프트웨어를 개발하고자 한다.
+이 소프트웨어는 학생 개인의 특성, 흥미, 능력을 분석하여 어울리는 직업을 추천한다.`,
+     tags:['ds','al'],subs:[
+      {l:'3-1',t:'이 소프트웨어를 어떻게 만들지 전체적인 구조와 동작 방식을 설계하시오.
+(입력받을 정보, 처리 방법, 출력 결과를 포함하시오.)'},
+      {l:'3-2',t:'소프트웨어에서 개인에게 적합한 직업을 추천하는 구체적인 방법(알고리즘)을 기술하시오.'},
+    ]},
+    {n:'[4]',col:'d',title:'아마존 포장 로봇 오류 문제 해결',
+     body:`아마존 쇼핑몰에서 포장 로봇을 이용해 65,536개의 선물을 자동 포장하였는데,
+포장 완료 후 장난감 5개가 남아 있었다.
+
+이미 32,768개의 선물은 배송을 시작하였고
+나머지 32,768개의 선물이 창고에 남아있다고 가정할 때,
+이 5개의 장난감이 어느 선물 상자에 들어가야 하는지 알 수 없는 상황이다.`,
+     tags:['al','lg'],subs:[
+      {l:'4',t:'이 문제를 해결하기 위한 방안을 논리적으로 기술하시오.
+(이미 배송된 선물의 처리 방법과 창고에 남은 선물의 처리 방법을 나누어 설명하시오.)'},
+    ]},
+  ]},
+  {round:3,qs:[
+    {n:'[1]',col:'g',title:'나만의 암호 방법 만들기',
+     body:`아래와 같이 제시된 한글 자음, 모음, 숫자를 이용하여 나만의 암호 방법을 만들어 보시오.
+
+  [제시 재료]
+  한글 자음 (ㄱ,ㄴ,ㄷ,...,ㅎ)
+  한글 모음 (ㅏ,ㅑ,ㅓ,...,ㅣ)
+  숫자 (0~9)
+
+  예) 알파벳 A를 ㄱ1로 표현하는 규칙을 만들 수 있다.`,
+     tags:['al','ds'],subs:[
+      {l:'1',t:'위에 제시된 자음, 모음, 숫자를 활용하여 나만의 암호화 규칙을 만들고, 그 규칙을 이용하여 "안녕하세요"를 암호화하는 예시를 보여 주시오.'},
+    ]},
+    {n:'[2]',col:'c',title:'드론 편대 비행 — 다양한 공중 모양 연출',
+     body:`다수의 드론이 있으며, 그 중 하나의 리더(선도) 드론만 다른 드론들에게 명령을 내릴 수 있다고 가정하자.
+팔로워 드론들은 리더의 명령에만 따른다.
+
+이 드론들을 이용하여 공중에서 다양한 모양(글자, 도형 등)을 최대한 많이 연출하려고 한다.`,
+     tags:['al','ds'],subs:[
+      {l:'2',t:'공중에서 다양한 모양을 연출하기 위해 리더 드론이 팔로워 드론들에게 내려야 할 명령의 종류와 메시지 체계를 구체적으로 제안하시오.
+(예: 이동 명령, 위치 좌표 전달 방식, 대형 유지 명령 등 포함)'},
+    ]},
+    {n:'[4]',col:'d',title:'유튜브 사용시간 급증 기사 분석',
+     body:`국내 유튜브 사용시간이 최근 2년 새 3배 이상 증가하였다는 기사를 읽고 물음에 답하시오.
+
+  [기사 요약]
+  스마트폰 앱 사용 통계 조사 결과, 국내에서 유튜브의 월간 사용시간이 2년 전 대비 3배 이상 증가하여 압도적인 1위를 차지하였다. 영상 콘텐츠 소비 문화의 변화와 알고리즘 추천 기능이 주요 원인으로 분석된다.`,
+     tags:['dt','ds'],subs:[
+      {l:'4-1',t:'유튜브 사용시간이 급격히 증가한 까닭은 무엇일지 구체적으로 분석하여 쓰시오.
+(기술적 이유, 사회적 이유, 사용자 행동 변화 등을 포함하시오.)'},
+      {l:'4-2',t:'앞으로 10년 후 앱 사용시간 통계를 다시 조사할 때, 사람들이 가장 많이 사용할 것이라고 생각하는 앱을 1위부터 3위까지 쓰고, 각각 그렇게 생각하는 이유를 설명하시오.'},
+    ]},
+  ]},
+  {round:4,qs:[
+    {n:'[1]',col:'g',title:'자율주행 자동차의 도덕적 결정 (Moral Decision)',
+     body:`브레이크가 고장 난 자율주행 자동차가 달리던 중 앞에서 보행자를 발견하였다.
+자동차는 멈출 수 없는 상황이며, 핸들을 꺾으면 다른 사람이 위험에 처할 수 있다.
+
+이런 상황에서 자율주행 자동차의 AI는 도덕적 결정(moral decision)을 해야 한다.`,
+     tags:['et','ds'],subs:[
+      {l:'1',t:'본인의 상상력을 발휘하여 이러한 문제를 해결하는 창의적인 방안을 제시하시오.
+(단, 운전자와 보행자 중 한 쪽만 희생시키는 단순한 선택 외의 방법도 함께 생각해 보시오.)'},
+    ]},
+    {n:'[2]',col:'c',title:'AR(증강현실) 가정 안전사고 탐지 소프트웨어 설계',
+     body:`증강현실(AR) 기술을 이용하여 가정에서 발생할 수 있는 다양한 안전사고를 탐지하고 즉시 알려줄 수 있는 스마트폰용 소프트웨어를 설계하시오.
+
+  예) 스마트폰 카메라로 부엌을 비추면, 위험한 물건(가스레인지, 칼 등)을 인식하여
+      경고를 표시하고, 사고 예방 방법을 안내한다.`,
+     tags:['ds'],subs:[
+      {l:'2',t:'이 소프트웨어의 이름을 정하고, 구체적인 기능과 작동 방식을 설계하시오.
+(어떤 안전사고를 탐지하는지, 어떻게 사용자에게 알려주는지, 어떻게 사고를 예방하는지 포함)'},
+    ]},
+    {n:'[4]',col:'d',title:'IT 텔레케어로 독거노인 건강 챙기기',
+     body:`IT를 활용해 독거노인의 건강을 챙겨주는 텔레케어(Telecare) 서비스 관련 기사를 읽고 물음에 답하시오.
+
+  [기사 요약]
+  1인 가구 노인이 증가하면서 홀로 살아가는 노인들을 위한 IT 기반 건강 모니터링 서비스(텔레케어)에 대한 관심이 높아지고 있다. 스마트 기기를 통해 노인의 건강 상태를 실시간으로 체크하고 위급 상황을 신속히 알리는 서비스가 개발되고 있다.`,
+     tags:['ds'],subs:[
+      {l:'4-1',t:'독거노인을 위한 다양한 IT 텔레케어 서비스를 3가지 이상 생각해 내고, 이를 이용하여 하루 동안 생활하는 시나리오를 구체적으로 서술하시오.'},
+      {l:'4-2',t:'현재 스마트폰이나 스마트워치 형태로 존재하는 텔레케어 장비 외에, 새로운 형태의 IT 텔레케어 장비를 한 가지 제안하고 어떻게 사용하는지 자세히 설명하시오.'},
+    ]},
+  ]},
+  {round:5,qs:[
+    {n:'[3]',col:'g',title:'전기밥솥 알고리즘 + 미래 자동 조리 로봇',
+     body:`단순히 밥을 짓는 용도로만 사용했던 전기밥솥의 기능이 나날이 발전하고 있다.
+현재의 전기밥솥은 찜, 볶음, 스프 등 다양한 요리를 할 수 있는 기능을 갖추고 있다.`,
+     tags:['al','ds'],subs:[
+      {l:'3-1',t:'현재의 전기밥솥에서 다양한 요리(예: 밥, 찜, 스프 등)를 가능하게 하는 알고리즘을 단계적으로 설명하시오.
+(사용자가 메뉴를 선택하는 것부터 완성까지의 전 과정)'},
+      {l:'3-2',t:'전기밥솥보다 훨씬 발전된 미래의 "음식 자동 조리 로봇"을 구상하여 제안하시오.
+(로봇의 이름, 모양, 기능, 동작 방식을 포함)'},
+    ]},
+    {n:'[4]',col:'c',title:'빅데이터를 활용한 학교 데이터 수집 알고리즘',
+     body:`다음은 빅데이터에 관한 신문기사를 읽고 물음에 답하시오.
+
+  [기사 요약]
+  빅데이터란 기존 방법으로는 처리하기 어려울 만큼 방대한 양의 데이터를 말한다. 빅데이터를 분석하면 숨겨진 패턴, 연관성, 트렌드 등을 발견할 수 있어 다양한 분야에서 활용되고 있다. 특히 교육 분야에서도 학생들의 학습 데이터를 분석해 더 나은 교육 환경을 만들려는 시도가 늘고 있다.`,
+     tags:['dt','al'],subs:[
+      {l:'4-1',t:'학생들이 학교생활을 하는 동안 얻을 수 있는 데이터의 종류는 무엇이 있을지 최대한 다양하게 생각하여 기술하시오.
+(학업, 건강, 생활, 관계 등 여러 측면 포함)'},
+      {l:'4-2',t:'위에서 생각한 다양한 데이터를 실제로 디지털화하여 수집하는 알고리즘을 설계하시오.
+(어떤 장치/방법으로 수집하는지, 어떻게 저장·관리하는지 포함)'},
+    ]},
+  ]},
+  {round:6,qs:[
+    {n:'[2]',col:'g',title:'드론 택배 서비스 설계',
+     body:`드론을 이용한 택배 서비스(물건 배송)를 설계하려고 한다.
+드론은 하늘을 날아 목적지까지 물건을 전달하는 무인 비행 기기이다.`,
+     tags:['ds','al'],subs:[
+      {l:'2-1',t:'드론을 이용하여 소비자가 구입한 물건이 판매자(A)로부터 물건을 받는 사람(B)에게 전달되는 전 과정을 단계적으로 설명하시오.
+(주문부터 배달 완료까지의 순서도를 함께 그리면 더 좋습니다.)'},
+      {l:'2-2',t:'드론을 이용한 택배 서비스를 실제로 실시하는 데 있어 예상되는 제한점(문제점)을 2가지 이상 쓰고, 각 제한점을 어떻게 해결할 수 있을지 자신의 생각을 쓰시오.'},
+    ]},
+    {n:'[3]',col:'c',title:'횡단보도 보행 신호 부족 문제 — 정보 기술로 해결',
+     body:`우리나라 횡단보도의 보행 신호 시간은 일반 성인을 기준으로 설정되어 있다.
+따라서 노약자, 임산부, 장애인과 같이 걷는 속도가 느린 사람들에게는 보행 신호 시간이 부족하다는 문제가 있다.`,
+     tags:['ds','al'],subs:[
+      {l:'3-1',t:'위의 내용을 읽고 해결해야 할 핵심 문제가 무엇인지 명확하게 기술하시오.'},
+      {l:'3-2',t:"이 문제를 해결하기 위해 적용할 만한 '정보 기술' 5가지를 선정하고, 각각을 선택한 이유와 어떻게 활용하는지 함께 서술하시오."},
+      {l:'3-3',t:"앞에서 서술한 '정보 기술'들을 활용하여 문제를 해결하는 전체 절차를 글, 그림, 도형, 순서도 등 원하는 방법으로 표현하시오."},
+    ]},
+  ]},
+  {round:7,qs:[
+    {n:'[2]',col:'g',title:'배낭여행 보물 동굴 — 최대 가치 계산 (배낭 문제)',
+     body:`알리바바는 배낭여행 중 보물 동굴을 발견했다.
+동굴 안에는 보물 4개가 있으며 배낭은 최대 10kg까지만 넣을 수 있다.
+
+  보물 A: 무게 5kg / 가치 10
+  보물 B: 무게 4kg / 가치 40
+  보물 C: 무게 2kg / 가치 30
+  보물 D: 무게 3kg / 가치 50
+
+  (1개만 선택해도 되고, 여러 개를 조합해도 된다.)`,
+     tags:['al','lg'],subs:[
+      {l:'2-1',t:'배낭에 넣어 가져갈 수 있는 보석의 조합을 가능한 모두 찾아보고, 각각의 총 무게와 총 가치를 계산하시오. 그 중 가장 가치가 높은 조합은 무엇인지 밝히시오.'},
+      {l:'2-2',t:'2-1의 방법(모든 경우 따지기)보다 더 간단하고 효율적으로 최대 가치를 구하는 방법을 생각해서 제시하시오.
+(단위 무게당 가치 등 다양한 접근법을 활용해 보시오.)'},
+    ]},
+    {n:'[4]',col:'c',title:'공공데이터 활용 — 데이터→정보 변환과 학업 성취 소프트웨어',
+     body:`다음 신문기사를 읽고 공공데이터 활용 관련 문제에 답하시오.
+
+  [기사 요약]
+  정부는 다양한 분야의 공공데이터를 개방하여 누구나 활용할 수 있도록 하고 있다. 이 데이터를 잘 활용하면 새로운 서비스를 만들거나 사회 문제를 해결하는 데 도움이 된다. 교육 분야에서도 학생들의 학습 데이터를 분석하여 개인별 맞춤 교육을 제공하려는 시도가 늘고 있다.`,
+     tags:['dt','ds'],subs:[
+      {l:'4-1',t:'데이터(Data)가 생활에 유용한 정보(Information)로 변환되는 과정을 초등학생도 쉽게 이해할 수 있도록 구체적인 예시를 들어 설명하시오.'},
+      {l:'4-2',t:'만약 학교에서 발생하는 데이터를 수집하여 학생들의 학업 성취에 도움을 주는 소프트웨어를 개발한다면, 어떤 데이터를 수집해야 하는지와 그 데이터를 수집해야 하는 까닭을 함께 쓰시오.'},
+    ]},
+  ]},
+  {round:8,qs:[
+    {n:'[2]',col:'g',title:'학교 도서관 AI 책 추천 시스템',
+     body:`학교 도서관에 책을 추천해주는 인공지능(AI) 시스템을 구현하려고 한다.
+이 시스템은 학생 개개인의 독서 이력, 관심사, 학년 등을 분석하여 적합한 책을 추천한다.`,
+     tags:['al','ds'],subs:[
+      {l:'2-1',t:'이 AI 시스템이 학생들에게 책을 추천해주는 방법을 구체적으로 설명하시오.
+(어떤 정보를 분석하여, 어떤 기준으로 책을 추천하는지 포함)'},
+      {l:'2-2',t:'학생들이 책 읽기를 더욱 좋아하도록 유도하는 방법을 3가지 이상 서술하시오.
+(도서관 시스템, 보상, AI 활용 방법 등 다양하게 제안)'},
+    ]},
+    {n:'[4]',col:'c',title:'로봇 미로 탈출 게임 — 최고 점수 경로 찾기',
+     body:`출발 지점에서 도착 지점까지 로봇이 미로를 탈출하는 게임을 만들려고 한다.
+
+  [규칙]
+  • 로봇은 오른쪽 또는 아래쪽 방향으로만 이동할 수 있다.
+  • 이동한 칸에서 얻은 숫자는 점수로 환산된다.
+  • 출발 칸의 점수도 포함한다.
+
+  [미로 지도 — 숫자는 각 칸의 점수]
+  ┌────┬────┬────┬────┐
+  │ 1  │ 2  │ 3  │ 4  │  ← 시작(왼쪽 위)
+  ├────┼────┼────┼────┤
+  │ 5  │ 6  │ 7  │ 8  │
+  ├────┼────┼────┼────┤
+  │ 3  │ 4  │ 5  │ 6  │
+  ├────┼────┼────┼────┤
+  │ 2  │ 3  │ 4  │ ★  │  ← 도착(오른쪽 아래)
+  └────┴────┴────┴────┘`,
+     tags:['al'],subs:[
+      {l:'4-1',t:'이 게임에서 얻을 수 있는 가장 높은 점수를 구하고, 그 경로(이동 순서)를 구체적으로 나타내시오.'},
+      {l:'4-2',t:'가장 높은 점수를 얻기 위한 알고리즘을 설계하시오.
+(각 칸에서 어떤 판단을 내려 경로를 결정하는지 단계적으로 설명)'},
+    ]},
+  ]},
+  {round:9,qs:[
+    {n:'[1]',col:'g',title:'2023년 3월 지역별 기온 데이터 분석',
+     body:`아래는 2023년 3월 우리나라의 지역별 기온 데이터 일부를 발췌한 내용이다.
+
+  지역번호 / 지역명 / 평균기온(°C) / 최고기온(°C) / 최저기온(°C)
+  1 / 서울 / 7.3 / 13.2 / 2.1
+  2 / 부산 / 10.5 / 16.8 / 5.2
+  3 / 대구 / 9.8 / 15.4 / 4.3
+  4 / 인천 / 6.9 / 12.7 / 1.8
+  5 / 광주 / 9.2 / 14.9 / 3.8
+
+  [학생들의 대화]
+  학생 A: "지역번호의 평균을 구하면 (1+2+3+4+5)÷5 = 3이야!"
+  학생 B: "대구가 부산보다 평균기온이 낮으니까 대구가 더 추운 거야."
+  학생 C: "이 데이터를 꺾은선 그래프로 나타내면 지역별 비교가 쉬울 것 같아."`,
+     tags:['dt'],subs:[
+      {l:'1-1',t:'학생들의 대화에서 어색하거나 잘못된 부분을 찾고, 그 이유를 수학적·통계적 개념을 들어 설명하시오.'},
+      {l:'1-2',t:'위의 데이터를 이용하여 가장 적합한 새로운 그래프를 그리고, 왜 그 종류의 그래프를 선택했는지 이유를 설명하시오. 그래프에서 읽을 수 있는 정보도 함께 서술하시오.'},
+    ]},
+    {n:'[2]',col:'c',title:'교실 좌석 배치 소프트웨어 개발',
+     body:`좌석 배치도를 참고하여 교실에서 학생들의 좌석을 배치하는 소프트웨어를 개발하려고 한다.
+이 소프트웨어는 다양한 조건을 고려하여 학생들의 좌석을 자동으로 배치해 준다.
+예를 들어, 키 순서, 시력, 친구 관계, 교우 관계 등을 반영할 수 있다.`,
+     tags:['al','ds'],subs:[
+      {l:'2-1',t:'이 소프트웨어가 좌석을 배치하기 위해 필요한 데이터의 종류를 최대한 다양하게 기술하시오.
+각 데이터가 좌석 배치에 어떻게 활용되는지도 함께 쓰시오.'},
+      {l:'2-2',t:'이 소프트웨어의 동작 알고리즘을 단계적으로 설명하시오.
+(데이터 입력부터 최종 좌석 배치 결과 출력까지의 전 과정)'},
+    ]},
+    {n:'[3]',col:'d',title:'숫자 야구 게임 프로그램 개발',
+     body:`사용자가 컴퓨터와 숫자 야구를 하는 게임 프로그램을 개발하려고 한다.
+
+  [숫자 야구 규칙]
+  • 컴퓨터가 서로 다른 숫자 3개로 이루어진 비밀 번호를 정한다.
+  • 사용자가 숫자를 입력하면 컴퓨터가 결과를 알려준다.
+    - 스트라이크(S): 숫자와 위치 모두 일치
+    - 볼(B): 숫자는 맞지만 위치가 다름
+    - 아웃: 맞는 숫자가 없음
+  • 3 스트라이크가 나오면 사용자가 이긴다.`,
+     tags:['al','ds'],subs:[
+      {l:'3-1',t:'이 게임을 더욱 흥미롭게 만들 수 있는 방법을 3가지 이상 제안하시오.
+(난이도, 시간 제한, 힌트 시스템, 멀티플레이 등 자유롭게 아이디어 제시)'},
+      {l:'3-2',t:'플레이어가 이 게임에서 가장 빨리 정답을 맞히기 위한 전략(알고리즘)을 구체적으로 기술하시오.'},
+      {l:'3-3',t:'숫자 야구와 비슷한 원리를 이용하되, 완전히 새로운 게임을 구상하여 적으시오.
+(게임 이름, 규칙, 재미 요소 포함)'},
+    ]},
+  ]},
+];
+const AI_QS=[
+  {n:'AI-1',col:'p',title:'AI 음악 작곡 프로그램 설계',body:`AI 음악 작곡 프로그램을 이용하면 악기를 다루지 못해도 자신만의 음악을 만들 수 있다.
+사용자가 원하는 음악의 스타일, 분위기, 악기 등을 입력하면 AI가 자동으로 작곡해 주는 프로그램을 설계하려고 한다.`,tags:['ai','ds'],subs:[
+    {l:'AI-1-1',t:'사용자가 원하는 음악을 만들기 위해 AI 프로그램에 어떤 정보를 입력해야 하는지 구체적으로 설명하시오. (장르, 분위기, 악기, 빠르기 등)'},
+    {l:'AI-1-2',t:'사용자의 입력을 받아 AI가 음악을 작곡하는 과정을 단계별로 나타내시오. (순서도로 표현하면 더욱 좋습니다.)'},
+    {l:'AI-1-3',t:'이 AI 음악 작곡 프로그램이 학교 교육 현장에서 어떻게 활용될 수 있는지 구체적인 활용 사례를 2가지 이상 제안하시오.'},
+  ]},
+  {n:'AI-2',col:'c',title:'급식 음식 알레르기 AI 관리 시스템',body:`학교 급식에서 음식 알레르기가 있는 학생들이 위험한 음식을 먹는 사고를 예방하기 위해, AI 알레르기 관리 시스템을 도입하려고 한다.
+이 시스템은 학생별 알레르기 정보를 관리하고, 급식 메뉴와 대조하여 위험 상황을 사전에 차단한다.`,tags:['ai','dt','al'],subs:[
+    {l:'AI-2-1',t:'이 AI 시스템이 제대로 작동하려면 어떤 데이터가 필요한지 모두 나열하고, 각각의 데이터를 어떤 방법으로 수집할 수 있는지 설명하시오.'},
+    {l:'AI-2-2',t:'학생이 급식을 받을 때 AI가 알레르기 위험을 사전에 어떻게 감지하고 차단할 수 있는지 구체적인 방법을 기술하시오. (순서도로 표현하면 더욱 좋습니다.)'},
+  ]},
+  {n:'AI-3',col:'g',title:'AI 스마트 방범 시스템 설계',body:`우리 동네의 범죄 예방을 돕는 AI 스마트 방범 시스템을 설계하려고 한다.
+이 시스템은 CCTV, 센서, AI 분석 기술 등을 활용하여 범죄를 사전에 예방하고, 위험 상황을 신속하게 알린다.`,tags:['ai','et'],subs:[
+    {l:'AI-3-1',t:'스마트 방범 시스템에 필요한 기술과 장비의 종류를 나열하고, 각각이 어떤 역할을 하는지 설명하시오.'},
+    {l:'AI-3-2',t:'이 시스템은 많은 데이터를 수집하기 때문에 개인 정보 침해 문제가 발생할 수 있다. 범죄 예방 효과는 유지하면서 개인 정보를 보호하는 방법에 대한 자신의 의견을 논리적으로 쓰시오.'},
+  ]},
+  {n:'AI-4',col:'b',title:'학생 이해도 실시간 파악 + 맞춤형 문제 출제 AI',body:`AI가 학생의 학습 이해도를 실시간으로 파악하고, 즉시 맞춤형 문제를 출제하는 소프트웨어를 개발하려고 한다.
+이 소프트웨어는 학생마다 다른 수준의 문제를 자동으로 제공하여 개인별 학습 효율을 높인다.`,tags:['ai','al'],subs:[
+    {l:'AI-4-1',t:'AI가 학생의 학습 이해도를 어떤 방법으로 실시간 파악할 수 있는지 구체적으로 설명하시오.
+(문제 풀이 속도, 오답 패턴, 반응 시간 등 다양한 방법 포함)'},
+    {l:'AI-4-2',t:'파악된 이해도를 바탕으로 맞춤형 문제를 생성하는 방법(알고리즘)을 단계적으로 설명하시오.'},
+    {l:'AI-4-3',t:'이 소프트웨어가 학생들에게 가져다주는 장점과, 반대로 발생할 수 있는 한계점을 각각 2가지씩 서술하시오.'},
+  ]},
+  {n:'AI-5',col:'g',title:'AI 스마트 홈 — 노인 혼자서도 건강하게 생활할 수 있도록',body:`AI를 활용하여 노인들이 혼자서도 건강하고 안전하게 생활할 수 있도록 돕는 스마트 홈 시스템을 개발하려고 한다.
+이 시스템은 건강 모니터링, 위험 감지, 일정 관리 등의 기능을 통해 독거노인을 지원한다.`,tags:['ai','ds'],subs:[
+    {l:'AI-5-1',t:'이 스마트 홈 시스템이 노인들에게 제공해야 할 서비스를 5가지 이상 나열하고, 각각이 어떻게 작동하는지 간략히 설명하시오.'},
+    {l:'AI-5-2',t:'노인이 갑자기 쓰러지는 상황을 AI가 어떻게 감지하고, 그 후 어떤 대응을 자동으로 취할 수 있는지 단계적으로 설명하시오. (순서도로 표현하면 더욱 좋습니다.)'},
+  ]},
+  {n:'AI-6',col:'c',title:"AI 챗봇 '학교 마음 친구' — 학생 고민 상담 서비스",body:`AI 챗봇이 학생들의 고민을 들어주고 도움을 주는 '학교 마음 친구' 서비스를 개발하려고 한다.
+이 챗봇은 학생들이 친구 관계, 학업 스트레스, 가족 문제 등 다양한 고민을 털어놓을 수 있는 공간을 제공한다.`,tags:['ai','et','ds'],subs:[
+    {l:'AI-6-1',t:'이 AI 챗봇이 갖추어야 할 기능을 구체적으로 설명하고, 반대로 AI 챗봇이 사람 상담사를 대신하기 어려운 한계점은 무엇인지도 함께 서술하시오.'},
+    {l:'AI-6-2',t:'챗봇이 상담 중에 자해, 폭력, 심각한 위기 상황 등을 나타내는 심각한 고민을 감지했을 때, 어떻게 대처해야 하는지 단계별로 방법을 제안하시오.'},
+  ]},
+  {n:'AI-7',col:'p',title:'AI 개인 비서 앱 — 하루 일정 관리 + 효율적 생활 도우미',body:`AI 개인 비서가 하루 일정을 관리하고 더 효율적으로 생활할 수 있도록 도와주는 앱을 설계하려고 한다.
+이 앱은 사용자의 생활 패턴을 학습하여 일정, 알림, 정보 검색 등을 자동으로 처리해 준다.`,tags:['ai','ds'],subs:[
+    {l:'AI-7-1',t:'이 AI 개인 비서 앱이 사용자에게 제공해야 할 핵심 기능 5가지를 설명하시오.
+(단순한 알람 설정이 아닌, AI가 능동적으로 도와주는 기능 위주로)'},
+    {l:'AI-7-2',t:'개인의 일정, 위치, 생활 패턴 등 민감한 정보를 AI에게 맡기는 것의 장점과 반대로 발생할 수 있는 위험성을 각각 논리적으로 서술하시오.'},
+  ]},
+  {n:'AI-8',col:'b',title:'AI 스마트 도로 — 교통사고 위험 구간 분석 + 사고 예방',body:`AI가 교통사고 위험 구간을 분석하고 사고를 예방하는 스마트 도로 시스템을 개발하려고 한다.
+이 시스템은 도로 곳곳에 설치된 센서와 카메라로 수집한 데이터를 AI가 실시간으로 분석하여 위험 상황을 사전에 예방한다.`,tags:['ai','dt','ds'],subs:[
+    {l:'AI-8-1',t:'이 스마트 도로 시스템이 수집해야 할 데이터의 종류를 최대한 다양하게 나열하고, 각 데이터가 사고 예방에 어떻게 활용되는지 설명하시오.'},
+    {l:'AI-8-2',t:'AI가 수집된 데이터를 분석하여 교통사고를 예방하는 구체적인 방법을 3가지 제안하시오.
+(운전자 경고, 신호 제어, 도로 안내 등)'},
+  ]},
+  {n:'AI-9',col:'g',title:'AI 분리수거 도우미 앱 — 쓰레기 사진 찍으면 방법 알려주기',body:`AI가 쓰레기 사진을 찍으면 어떻게 분리수거해야 하는지 알려주는 앱을 만들려고 한다.
+사용자가 스마트폰 카메라로 쓰레기를 찍으면 AI가 종류를 판별하여 올바른 분리수거 방법을 안내한다.`,tags:['ai','al'],subs:[
+    {l:'AI-9-1',t:'이 앱이 쓰레기의 종류를 어떻게 인식하고 분리수거 방법을 결정하는지 그 원리와 과정을 설명하시오. (순서도로 표현하면 더욱 좋습니다.)'},
+    {l:'AI-9-2',t:'기본적인 분리수거 안내 기능 외에, 이 앱을 더욱 유용하게 만들 수 있는 추가 기능을 2가지 제안하고 각각 어떤 효과가 있는지 설명하시오.'},
+  ]},
+  {n:'AI-10',col:'c',title:'AI 스마트 대중교통 시스템 — 장애인 교통 편의 향상',body:`AI를 활용하여 장애인들이 대중교통을 더 편리하고 안전하게 이용할 수 있는 스마트 대중교통 시스템을 설계하려고 한다.
+현재 대중교통은 일반인 기준으로 설계되어 있어, 장애인들이 이용하기에 불편한 점이 많다.`,tags:['ai','ds','et'],subs:[
+    {l:'AI-10-1',t:'이 스마트 대중교통 시스템이 장애인들에게 제공해야 할 서비스를 5가지 나열하고, 각각의 서비스가 어떤 불편을 해소하는지 설명하시오.'},
+    {l:'AI-10-2',t:'시각장애인, 청각장애인, 지체장애인(휠체어 이용자) 각각에게 특별히 필요한 기능을 구체적으로 설명하시오.'},
+  ]},
+];
+const SW_QS=[
+  {n:'SW-1',col:'c',title:'급식실 식재료 재고 데이터 분석',body:'우리 학교 급식실에서는 매일 식재료를 주문하고 남은 재료를 보관한다.
+아래는 이번 주 식재료 재고 현황이다.',tags:['dt','al'],
+   table:`<table class="dtb"><tr><th>식재료</th><th>월요일 입고(kg)</th><th>사용량(kg)</th><th>수요일 잔량(kg)</th><th>유통기한</th></tr><tr><td>쌀</td><td>50</td><td>32</td><td style="color:var(--gold);font-weight:700">?</td><td>30일</td></tr><tr><td>당근</td><td>20</td><td>14</td><td style="color:var(--gold);font-weight:700">?</td><td>7일</td></tr><tr><td>닭고기</td><td>30</td><td>28</td><td style="color:var(--gold);font-weight:700">?</td><td>3일</td></tr><tr><td>두부</td><td>15</td><td style="color:var(--gold);font-weight:700">?</td><td>3</td><td>5일</td></tr><tr><td>시금치</td><td>10</td><td>10</td><td style="color:var(--gold);font-weight:700">?</td><td>2일</td></tr></table>`,
+   subs:[{l:'SW-1-1',t:'위 표에서 잘못되었거나 어색한 데이터를 모두 찾고, 각각 왜 문제가 되는지 이유를 설명하시오.'},{l:'SW-1-2',t:"수요일 잔량이 '?'인 항목을 모두 계산하고, 목요일과 금요일에 주문해야 할 양을 자동으로 결정하는 알고리즘을 설계하시오.
+(조건: 유통기한이 지나기 전에 모두 소비되도록 계산)"},{l:'SW-1-3',t:'이 알고리즘을 실제 소프트웨어로 만들 때 필요한 데이터(입력값)와 주요 기능(처리 방법)을 구체적으로 설계하시오.'}]},
+  {n:'SW-2',col:'b',title:'학교 Wi-Fi 공유기 최적 접속 알고리즘',body:'우리 학교에는 5개의 교실(A~E)과 3개의 Wi-Fi 공유기(①②③)가 있다.
+각 공유기는 아래 표처럼 교실과 연결되며, 숫자는 신호 강도(100이 최강)이다.',tags:['al','dt'],
+   table:`<table class="dtb"><tr><th>교실</th><th>공유기①</th><th>공유기②</th><th>공유기③</th></tr><tr><td>A교실</td><td style="color:var(--gr);font-weight:700">85</td><td>40</td><td>20</td></tr><tr><td>B교실</td><td>60</td><td style="color:var(--gr);font-weight:700">75</td><td>30</td></tr><tr><td>C교실</td><td>30</td><td style="color:var(--gr);font-weight:700">80</td><td>55</td></tr><tr><td>D교실</td><td>15</td><td>50</td><td style="color:var(--gr);font-weight:700">90</td></tr><tr><td>E교실</td><td>10</td><td>35</td><td style="color:var(--gr);font-weight:700">88</td></tr></table>`,
+   subs:[{l:'SW-2-1',t:'각 교실이 어느 공유기에 접속해야 신호가 가장 강한지 결정하는 알고리즘을 설명하시오.
+(표를 보고 판단하는 방법과, 컴퓨터가 자동으로 처리하는 방법 포함)'},{l:'SW-2-2',t:'A교실과 D교실이 동시에 영상 수업을 할 경우, 두 교실 모두 최대한 빠른 속도를 유지하면서 공유기 부하를 분산하는 방법을 제안하시오.'},{l:'SW-2-3',t:'예산이 허락하여 공유기를 1개만 추가로 설치할 수 있다면 어느 위치에 설치해야 효과가 가장 클지, 표의 데이터를 근거로 결정하고 이유를 설명하시오.'}]},
+  {n:'SW-3',col:'g',title:'학교 축제 부스 배치 퍼즐',body:`학교 축제에서 10개 반이 각각 부스를 운영한다.
+운동장에는 가로 5칸, 세로 2칸, 총 10자리가 있다.
+아래 조건을 모두 만족하도록 부스를 배치하려고 한다.
+
+  【배치 조건】
+  • 1반과 2반은 반드시 붙어 있어야 한다. (공동 부스 운영)
+  • 5반(음식 부스)과 6반(음식 부스)은 서로 이웃하지 않아야 한다. (냄새 겹침 방지)
+  • 3반(과학 실험 부스)은 입구(1열 1칸)에 배치해야 한다.
+  • 7반과 8반은 같은 열(가로 줄)에 있어야 한다.
+  • 나머지 반은 자유롭게 배치한다.`,tags:['al','lg'],subs:[
+    {l:'SW-3-1',t:'위 조건을 모두 만족하는 배치 방법을 표 형태(가로 5칸 × 세로 2칸)로 나타내시오.'},{l:'SW-3-2',t:'조건을 검사하는 순서(알고리즘)를 단계별로 설명하시오. 어떤 조건을 가장 먼저 처리하면 효율적인지도 함께 설명하시오.'},{l:'SW-3-3',t:'조건이 서로 충돌하여 배치가 불가능한 상황이 발생하면 소프트웨어가 어떻게 처리해야 할지 방법을 제안하시오.'}]},
+  {n:'SW-4',col:'p',title:"런-렝스 인코딩(RLE) 데이터 압축",body:`컴퓨터는 데이터를 저장할 때 용량을 줄이기 위해 '압축'을 한다.
+아래는 반복되는 문자를 줄여 저장하는 방법(런-렝스 인코딩, Run-Length Encoding)의 예시이다.
+
+  원본: AAABBBBBCCDDDDDD  →  압축: A3B5C2D6
+  원본: XXYYYZZZZZ       →  압축: X2Y3Z5
+
+  (문자 다음에 연속 반복 횟수를 적는 방식)`,tags:['al','lg'],subs:[
+    {l:'SW-4-1',t:'다음 문자열을 위의 방법으로 압축하시오.
+  ① AAAAABBBBBAAAAA
+  ② KKMMMMTTTTTTTT
+  ③ ABCDE  (반복이 없는 경우 — 어떻게 표현하면 좋을지 방법도 제안하시오.)'},{l:'SW-4-2',t:'이 런-렝스 인코딩 압축 방법의 단점을 설명하고, 그 단점을 보완한 새로운 압축 방법을 직접 창안하시오.
+(새 방법의 규칙과 예시 포함)'},{l:'SW-4-3',t:'학교 성적표 데이터(이름, 점수, 등급이 반복적으로 나타나는 경우)를 저장할 때 용량을 줄이는 방법을 제안하시오.'}]},
+  {n:'SW-5',col:'d',title:'도서관 대출 현황 데이터 분석 + 6월 예측 + 자동 추천 알고리즘',body:'아래는 우리 학교 도서관의 최근 6개월 대출 현황 데이터이다.',tags:['dt','al'],
+   table:`<table class="dtb"><tr><th>월</th><th>과학</th><th>역사</th><th>소설</th><th>수학</th><th>만화</th></tr><tr><td>1월</td><td>45</td><td>30</td><td>62</td><td>28</td><td>90</td></tr><tr><td>2월</td><td>38</td><td>35</td><td>70</td><td>31</td><td>85</td></tr><tr><td>3월</td><td>52</td><td>28</td><td>55</td><td>35</td><td>92</td></tr><tr><td>4월</td><td>60</td><td>22</td><td>48</td><td>40</td><td>88</td></tr><tr><td>5월</td><td>70</td><td>18</td><td>40</td><td>44</td><td>95</td></tr><tr><td style="color:var(--gold);font-weight:700">6월</td><td style="color:var(--gold)">?</td><td style="color:var(--gold)">?</td><td style="color:var(--gold)">?</td><td style="color:var(--gold)">?</td><td style="color:var(--gold)">?</td></tr></table>`,
+   subs:[{l:'SW-5-1',t:'위 데이터를 분석하여 찾을 수 있는 규칙(패턴)을 2가지 이상 설명하시오.'},{l:'SW-5-2',t:'위 데이터의 패턴을 바탕으로 6월의 각 장르별 대출 수를 예측하고, 그 예측 방법(알고리즘)을 설명하시오.'},{l:'SW-5-3',t:'이 대출 현황 데이터를 활용하여 학생에게 책을 자동 추천하는 시스템의 알고리즘을 설계하시오. 단, 대출 이력이 전혀 없는 신입생에게도 추천이 가능해야 한다.'}]},
+  {n:'SW-6',col:'g',title:'스마트 신호등 — 5가지 센서 활용 초록불 시간 자동 조절',body:`우리 학교 앞 사거리에 스마트 신호등을 설치하려고 한다.
+신호등은 아래 5가지 센서 데이터를 수집할 수 있다.
+
+  ① 카메라: 각 방향 차량 대수, 보행자 수, 어린이·노인 구별 가능
+  ② 루프 코일: 차량이 정지선을 밟는 순간 감지 (대기 중인 차량 수)
+  ③ 소음 센서: 구급차·소방차 사이렌 감지 (100m 반경)
+  ④ 기상 센서: 비·눈·안개 여부, 노면 미끄러움 감지
+  ⑤ 시간 데이터: 현재 시각, 요일, 학교 행사 여부`,tags:['al','ds'],subs:[
+    {l:'SW-6-1',t:'위 5가지 센서 데이터를 활용하여 신호등 초록불 시간을 자동으로 조절하는 알고리즘을 설계하시오.
+조건 분기(if-else)를 포함한 순서도로 표현하시오.'},{l:'SW-6-2',t:"이 신호등이 처음 설치되어 아무 데이터도 쌓이지 않은 상태(콜드 스타트 문제)에서의 기본 작동 방법과, 이후 데이터가 쌓이면서 점점 개선되는 과정을 설명하시오."},{l:'SW-6-3',t:"인근 3개 사거리의 신호등을 서로 연결하여 차량이 연속으로 초록불만 만나도록(그린웨이브) 하는 방법을 제안하시오."}]},
+  {n:'SW-7',col:'p',title:'시저 암호 (Caesar Cipher) — 암호화·복호화 + 개선 방법 창안',body:`다음은 알파벳을 숫자로 바꾸는 간단한 암호 방법이다.
+
+  【기본 암호표】  A=1, B=2, C=3, D=4 ... Z=26
+
+  【암호화 규칙】
+  단어의 각 글자를 숫자로 바꾼 뒤, 비밀 키(Key)를 더한다.
+
+  예) KEY=3일 때,
+    DOG → D(4)+3=7, O(15)+3=18, G(7)+3=10 → 암호문: 7 18 10`,tags:['al','lg'],subs:[
+    {l:'SW-7-1',t:"위 방법으로 'CAT'를 KEY=5로 암호화하고, 암호화 과정을 단계별로 설명하시오.
+(각 글자를 어떻게 변환했는지 과정을 보여 주시오.)"},{l:'SW-7-2',t:"암호문 '14 9 22 5'를 KEY=3으로 복호화(원래 단어로 되돌리기)하시오.
+복호화 방법(알고리즘)도 함께 설명하시오."},{l:'SW-7-3',t:'이 암호 방법은 Key 값을 알면 쉽게 풀린다는 단점이 있다. 이 단점을 설명하고, 더 안전하게 개선한 새로운 암호 방법을 창안하시오.'},{l:'SW-7-4',t:'학교에서 학생들의 성적 데이터를 인터넷으로 전송할 때, 이 암호화 방법을 응용하여 데이터를 보호하는 방법을 제안하시오.'}]},
+  {n:'SW-8',col:'c',title:'드론 편대 비행 — 명령 체계 설계 + 장애 대응 알고리즘',body:`5대의 드론이 리더(L) 1대와 팔로워(F) 4대로 구성되어 있다.
+리더만 명령을 내릴 수 있고, 팔로워는 리더 명령에만 따른다.
+이 드론들로 하늘에 다양한 글자 모양을 만들려고 한다.
+
+  【드론 현재 위치】  (가로 좌표, 세로 좌표)로 표시
+  L : (3, 3)   F1 : (1, 1)   F2 : (5, 1)   F3 : (1, 5)   F4 : (5, 5)`,tags:['al','ds'],subs:[
+    {l:'SW-8-1',t:"드론들이 현재 위치에서 'X' 모양을 만들 수 있는 명령어 체계를 설계하시오.
+리더가 각 팔로워에게 어떤 명령을 내려야 하는지 이동할 좌표와 함께 설명하시오."},{l:'SW-8-2',t:'F2 드론이 배터리 부족으로 갑자기 비행을 이탈해야 할 때, 리더가 나머지 4대(L+F1+F3+F4)로 최대한 비슷한 모양을 유지하기 위해 취해야 할 행동을 알고리즘으로 설명하시오.'},{l:'SW-8-3',t:"드론 5대가 하늘에 숫자 '5'를 만들기 위해 필요한 최소 명령 횟수를 구하고, 리더가 각 팔로워에게 내리는 명령 순서를 설계하시오."}]},
+  {n:'SW-9',col:'g',title:'현장학습 배낭 최적화 문제 (Knapsack Problem)',body:'현장학습을 가는데 가방에 넣을 수 있는 최대 무게는 8kg이다.
+아래 물건들 중에서 유용성 점수의 합계가 최대가 되도록 물건을 고르려고 한다.',tags:['al','lg'],
+   table:`<table class="dtb"><tr><th>물건</th><th>무게(kg)</th><th>유용성 점수</th></tr><tr><td>도시락</td><td>2</td><td>50</td></tr><tr><td>물통</td><td>1</td><td>40</td></tr><tr><td>우산</td><td>1</td><td>35</td></tr><tr><td>구급약</td><td>1</td><td style="color:var(--gr);font-weight:700">60 ⭐</td></tr><tr><td>카메라</td><td>3</td><td>45</td></tr><tr><td>여분 옷</td><td>2</td><td>30</td></tr><tr><td>지도·안내책</td><td>1</td><td>25</td></tr></table>`,
+   subs:[{l:'SW-9-1',t:'무게 합계 8kg 이하로 유용성 점수 합계를 최대로 만드는 물건 조합을 구하시오.
+선택한 물건 목록, 총 무게, 총 점수를 명확히 밝히시오.'},{l:'SW-9-2',t:'SW-9-1에서 사용한 방법(전략)을 알고리즘으로 설명하시오. 이 방법보다 더 효율적으로 최적 조합을 찾는 방법이 있다면 제안하시오.'},{l:'SW-9-3',t:"물건을 '반드시 챙겨야 하는 것(필수 항목)'과 '있으면 좋은 것(선택 항목)'으로 미리 분류한다면, 알고리즘이 어떻게 달라져야 하는지 설명하시오."}]},
+  {n:'SW-10',col:'b',title:'로봇 미로 최고 점수 경로 찾기 (동적 프로그래밍)',body:'로봇이 학교 건물 입구(왼쪽 위)에서 출발하여 출구(오른쪽 아래)까지 이동한다.
+로봇은 오른쪽 또는 아래쪽으로만 이동할 수 있으며, 지나는 칸의 숫자가 점수로 쌓인다.',tags:['al'],
+   table:`<table class="dtb"><tr><th style="color:var(--gr)">(시작)→</th><th>→</th><th>→</th><th>→</th></tr><tr><td>3</td><td>8</td><td>2</td><td>5</td></tr><tr><td>6</td><td>1</td><td>7</td><td>3</td></tr><tr><td>2</td><td>9</td><td>4</td><td>6</td></tr><tr><td>1</td><td>3</td><td>8</td><td style="color:var(--gold);font-weight:700">(끝)</td></tr></table>`,
+   subs:[{l:'SW-10-1',t:'위 지도에서 얻을 수 있는 최고 점수를 구하고, 그 경로를 구체적으로 표시하시오.'},{l:'SW-10-2',t:'최고 점수를 찾는 알고리즘을 단계별로 설명하시오.
+(각 칸에서 어떤 기준으로 경로를 선택하는지 포함)'},{l:'SW-10-3',t:"만약 로봇이 오른쪽·아래쪽 외에 '아래→오른쪽 대각선 방향'으로도 이동할 수 있다면, 최고 점수가 어떻게 달라지는지 설명하고 새로운 경로와 점수도 구하시오."}]},
+];
+const TL={ai:'🤖 AI',al:'⚙️ 알고리즘',dt:'📊 데이터',et:'⚖️ AI윤리',ds:'🎨 창의설계',lg:'🧩 논리'};
+const TC={ai:'ta',al:'talg',dt:'tdt',et:'tet',ds:'tds',lg:'tlg'};
+const NC={g:'qn g',c:'qn c',d:'qn d',b:'qn b',p:'qn p'};
+let curSec='home',curRound=1,timerSec=0,timerInt=null,timerRunning=false;
+let bm=JSON.parse(localStorage.getItem('bm56')||'{}');
+let ans=JSON.parse(localStorage.getItem('ans56')||'{}');
+
+function updateDday(){const t=new Date('2026-06-20T13:00:00+09:00')-new Date();const d=Math.ceil(t/86400000);document.getElementById('cd').textContent=d>0?d:(d===0?'당일!':'종료');}
+updateDday();setInterval(updateDday,60000);
+
+function sw(sec,el){curSec=sec;document.querySelectorAll('.nt').forEach(b=>b.classList.remove('active'));el.classList.add('active');document.getElementById('sn').style.display=sec==='past'?'block':'none';if(sec==='past')buildRN();function saveApiKey(){
+  const url=document.getElementById('apikey-input').value.trim();
+  if(!url.startsWith('https://')){
+    document.getElementById('apikey-status').innerHTML='<span style="color:var(--red);">⚠️ 올바른 주소 형식이 아닙니다 (https://... 로 시작해야 합니다)</span>';
+    return;
+  }
+  localStorage.setItem('worker_url', url);
+  document.getElementById('apikey-status').innerHTML='<span style="color:var(--gr);">✓ AI 서버 주소가 저장되었습니다!</span>';
+  document.getElementById('apikey-banner').style.display='none';
+  setTimeout(()=>closeModal('apim'),1200);
+}
+function checkApiKey(){
+  const url=localStorage.getItem('worker_url');
+  if(!url) document.getElementById('apikey-banner').style.display='block';
+  else {
+    const inp=document.getElementById('apikey-input');
+    if(inp) inp.value=url;
+  }
+}
+render();
+checkApiKey();}
+function buildRN(){const nav=document.getElementById('rn');nav.innerHTML='';PAST.forEach(p=>{const b=document.createElement('button');b.className='sb'+(p.round===curRound?' active':'');b.textContent=`제${p.round}회`;b.onclick=()=>{curRound=p.round;buildRN();render();};nav.appendChild(b);});}
+
+function render(){
+  const c=document.getElementById('ct');
+  if(curSec==='home'){c.innerHTML=renderHome();updateProgress();return;}
+  if(curSec==='past'){const rd=PAST.find(p=>p.round===curRound);c.innerHTML=`<div class="sh"><span>📚</span><span class="sh-t">제${curRound}회 기출문제 — 초등학교 5~6학년</span><span class="sh-c">${rd.qs.length}문제</span></div>`+rd.qs.map(q=>renderCard(q,'past_'+curRound)).join('');}
+  if(curSec==='ai'){c.innerHTML=`<div class="sh"><span>🤖</span><span class="sh-t">AI 관련 예상문제 10선</span><span class="sh-c">10문제</span></div>`+AI_QS.map(q=>renderCard(q,'ai')).join('');}
+  if(curSec==='sw2'){c.innerHTML=`<div class="sh"><span>⚙️</span><span class="sh-t">SW·교과·시사 예상문제 10선</span><span class="sh-c">10문제</span></div>`+SW_QS.map(q=>renderCard(q,'sw')).join('');}
+  restoreAns();attachCC();updateProgress();
+}
+
+function renderCard(q,pre){
+  const id=`${pre}_${q.n}`;const isbm=!!bm[id];const nc=NC[q.col||'g'];
+  const tags=(q.tags||[]).map(t=>`<span class="tg ${TC[t]}">${TL[t]}</span>`).join('');
+  let h=`<div class="qc${isbm?' bm':''}" id="card_${id}">
+    <div class="qc-head">
+      <div class="qh">
+        <div class="${nc}">${q.n}</div>
+        <div class="qt">${q.title}</div>
+        <div class="qa">
+          <button class="ib${isbm?' on':''}" title="북마크" onclick="toggleBm('${id}')">🔖</button>
+          <button class="ib" title="AI 힌트" onclick="toggleHint('${id}')">💡</button>
+        </div>
+      </div>
+      <div class="qm">${tags}</div>
+    </div>
+    <div class="qbody">
+      <div class="qbody-text">${(q.body||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+      ${q.table||''}
+    </div>
+    <div class="hp" id="hp_${id}"><div class="hl">💡 AI 힌트</div><div id="hc_${id}">로딩 중...</div></div>
+    <div class="qc-subs">`;
+  q.subs.forEach((s,i)=>{
+    const aid=`${id}_${i}`;const sv=ans[aid]||'';
+    h+=`<div class="sq">
+      <div class="sl">${s.l}</div>
+      <div class="st">${s.t.replace(/\n/g,'<br>')}</div>
+      <div class="ans-row">
+        <textarea class="aa" id="a_${aid}" placeholder="여기에 답을 작성하세요... 자동 저장됩니다 ✓" oninput="saveA('${aid}',this.value)">${sv}</textarea>
+      </div>
+      <div class="ans-bottom">
+        <div class="cc" id="c_${aid}">${sv.length}자</div>
+        <button class="eval-btn" id="eb_${aid}" onclick="evalAnswer('${aid}','${s.l}','${s.t.replace(/'/g,"\'").replace(/\n/g,' ')}')">🤖 AI 평가받기</button>
+      </div>
+      <div class="eval-panel" id="ep_${aid}"></div>
+    </div>`;
+  });
+  h+='</div></div>';return h;
+}
+
+function renderHome(){
+  const tot=getTQ(),dn=getDQ(),pct=tot?Math.round(dn/tot*100):0;
+  return `<div class="home-wrap">
+    <div class="home-title">
+      <h2>🟢 AI·SW사고력올림피아드 완전 대비</h2>
+      <p>제12회 대회 (2026년 6월 20일 토요일) 초등학교 5~6학년 부문<br>Quvia-Lab에서 제작한 기출문제 + 예상문제 학습 자료입니다.</p>
+      <div class="pbo"><div class="pbi" style="width:${pct}%"></div></div>
+      <div class="pi"><span>📝 내 답안 작성 진행률</span><span>${dn} / ${tot} 문제 · ${pct}%</span></div>
+    </div>
+    <div class="info-section">
+      <div class="info-section-title">📋 포함된 문제 목록</div>
+      <div class="prob-list">
+        <div class="prob-item"><span class="prob-badge past">기출</span><div class="prob-desc"><strong>제1회~제9회 기출문제 (2017~2025년)</strong><br>초등학교 5~6학년 부문의 역대 기출문제를 회차별로 정리하였습니다. 상단 메뉴의 <em>📚 기출문제 1~9회</em> 탭에서 회차를 선택하여 문제를 풀 수 있습니다. 학급 이름 정하기, 게임 중독 진단, 드론 편대, 자율주행 도덕적 결정, 빅데이터, 드론 택배, 배낭 문제, AI 도서 추천, 숫자 야구 등이 포함됩니다.</div></div>
+        <div class="prob-item"><span class="prob-badge ai">예상</span><div class="prob-desc"><strong>AI 관련 예상문제 10선</strong><br>AI 음악 작곡, 알레르기 관리 시스템, 스마트 방범, 맞춤형 학습, 스마트 홈, AI 챗봇, 개인 비서, 스마트 도로, 분리수거 앱, 대중교통 접근성 등 최신 AI 트렌드를 다루는 예상문제입니다. <em>🤖 AI 예상문제</em> 탭에서 풀 수 있습니다.</div></div>
+        <div class="prob-item"><span class="prob-badge sw">예상</span><div class="prob-desc"><strong>SW·교과·시사 예상문제 10선</strong><br>식재료 재고 관리, Wi-Fi 공유기 배치, 부스 배치 퍼즐, 데이터 압축(RLE), 도서관 대출 통계, 스마트 신호등(그린웨이브), 시저 암호, 드론 편대 좌표, 배낭 최적화, 로봇 미로 탈출 등 알고리즘·데이터 사고력을 측정하는 문제입니다. <em>⚙️ SW 예상문제</em> 탭에서 풀 수 있습니다.</div></div>
+      </div>
+    </div>
+    <div class="info-section">
+      <div class="info-section-title">🛠️ 이 사이트에서 제공하는 기능</div>
+      <table class="feat-table">
+        <tr><td class="feat-icon-cell">📐</td><td class="feat-name">순서도 가이드</td><td class="feat-desc">순서도 작성에 필요한 5가지 기호(타원·직사각형·마름모·평행사변형·화살표)의 의미와 실전 예시, 시험 꿀팁을 한눈에 확인할 수 있습니다. 화면 하단 초록 버튼 또는 우측 상단 버튼으로 열 수 있습니다.</td></tr>
+        <tr><td class="feat-icon-cell">⏱️</td><td class="feat-name">타이머</td><td class="feat-desc">실전 시험처럼 시간을 정해 두고 문제를 풀 수 있습니다. 30분·1시간·1시간30분·2시간 중 빠르게 선택하거나 직접 입력할 수 있습니다. 남은 시간이 5분 이하가 되면 빨간색으로 깜빡여 알려줍니다.</td></tr>
+        <tr><td class="feat-icon-cell">💡</td><td class="feat-name">AI 힌트</td><td class="feat-desc">각 문제 우측 상단의 💡 버튼을 누르면 Claude AI가 핵심 사고 방향, 구체적인 예시, 접근법을 힌트로 제공합니다. 답을 직접 알려주는 것이 아닌, 스스로 생각할 수 있도록 방향을 안내해 줍니다.</td></tr>
+        <tr><td class="feat-icon-cell">🤖</td><td class="feat-name">AI 평가</td><td class="feat-desc">각 소문항 답안 작성 후 <em>🤖 AI 평가받기</em> 버튼을 누르면 Claude AI가 점수(10점 만점), 잘한 점, 보완할 점, 추가하면 좋을 내용을 구체적으로 안내해 줍니다. 사용하려면 선생님이 알려주신 AI 서버 주소를 ⚙️ AI 설정 버튼에서 입력하세요.</td></tr>
+        <tr><td class="feat-icon-cell">🔖</td><td class="feat-name">북마크</td><td class="feat-desc">어렵거나 나중에 다시 풀어보고 싶은 문제는 🔖 버튼을 눌러 표시해 두세요. 북마크된 문제는 금색 테두리로 표시되며, 새로고침해도 기억됩니다.</td></tr>
+        <tr><td class="feat-icon-cell">💾</td><td class="feat-name">자동 저장</td><td class="feat-desc">각 문제의 답안 칸에 내용을 입력하면 자동으로 저장됩니다. 브라우저를 닫았다가 다시 열어도 이전에 작성한 답안이 그대로 남아 있습니다.</td></tr>
+        <tr><td class="feat-icon-cell">📊</td><td class="feat-name">진행률 표시</td><td class="feat-desc">화면 하단 중앙의 원형 그래프가 전체 문제 중 답안을 작성한 문제의 비율을 실시간으로 보여줍니다. (10자 이상 작성한 문제 기준)</td></tr>
+        <tr><td class="feat-icon-cell">🖨️</td><td class="feat-name">인쇄</td><td class="feat-desc">우측 상단의 🖨️ 인쇄 버튼을 누르면 불필요한 버튼들이 숨겨지고 답안지 형식으로 인쇄할 수 있습니다. 오프라인 연습용 학습지로 활용하세요.</td></tr>
+      </table>
+    </div>
+    <div class="info-section">
+      <div class="info-section-title">📖 사용 방법</div>
+      <div class="how-list">
+        <div class="how-item"><div class="how-num">1</div><div class="how-text">상단 메뉴에서 <strong>풀고 싶은 섹션</strong>(기출문제 / AI예상 / SW예상)을 선택합니다.</div></div>
+        <div class="how-item"><div class="how-num">2</div><div class="how-text">기출문제의 경우 <strong>회차 탭</strong>(제1회~제9회)을 클릭하여 원하는 회차를 선택합니다.</div></div>
+        <div class="how-item"><div class="how-num">3</div><div class="how-text">문제 본문을 읽고 각 소문항 아래의 <strong>답안 칸에 자유롭게 작성</strong>합니다. 자동 저장됩니다.</div></div>
+        <div class="how-item"><div class="how-num">4</div><div class="how-text">답 작성 후 <strong>🤖 AI 평가받기</strong> 버튼으로 점수와 조언을 받아보세요. 막힐 때는 💡 <strong>AI 힌트</strong>도 활용하세요.</div></div>
+        <div class="how-item"><div class="how-num">5</div><div class="how-text">순서도가 필요한 문제(특히 SW-6, AI-2, AI-5, AI-9, 6회-[3] 등)에서는 하단의 <strong>📐 순서도 가이드</strong>를 참고하세요.</div></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function saveA(id,val){ans[id]=val;localStorage.setItem('ans56',JSON.stringify(ans));showToast();updateProgress();const cc=document.getElementById('c_'+id);if(cc)cc.textContent=val.length+'자';}
+function restoreAns(){Object.entries(ans).forEach(([id,val])=>{const el=document.getElementById('a_'+id);if(el)el.value=val;});}
+function attachCC(){document.querySelectorAll('.aa').forEach(ta=>{const id=ta.id.replace('a_','');const cc=document.getElementById('c_'+id);if(cc)cc.textContent=ta.value.length+'자';});}
+function toggleBm(id){bm[id]=!bm[id];if(!bm[id])delete bm[id];localStorage.setItem('bm56',JSON.stringify(bm));const card=document.getElementById('card_'+id);const btn=card?.querySelector('.ib');if(bm[id]){card?.classList.add('bm');btn?.classList.add('on');}else{card?.classList.remove('bm');btn?.classList.remove('on');}}
+function getTQ(){let t=0;PAST.forEach(r=>r.qs.forEach(q=>t+=q.subs.length));AI_QS.forEach(q=>t+=q.subs.length);SW_QS.forEach(q=>t+=q.subs.length);return t;}
+function getDQ(){return Object.values(ans).filter(v=>v.trim().length>10).length;}
+function updateProgress(){const tot=getTQ(),dn=getDQ(),pct=tot?dn/tot:0;const off=94.25*(1-pct);const ci=document.getElementById('pc');const ti=document.getElementById('pt');if(ci)ci.style.strokeDashoffset=off;if(ti)ti.textContent=Math.round(pct*100)+'%';}
+
+// ── AI 힌트 (구체적 예시 포함) ──────────────────────────────────────────────
+async function toggleHint(id){
+  const panel=document.getElementById('hp_'+id);if(!panel)return;
+  if(panel.classList.contains('vis')){panel.classList.remove('vis');return;}
+  panel.classList.add('vis');
+  const card=document.getElementById('card_'+id);
+  const qt=card?.querySelector('.qt')?.textContent||'';
+  const qbody=card?.querySelector('.qbody-text')?.textContent||'';
+  const hc=document.getElementById('hc_'+id);
+  if(hc.innerHTML!=='로딩 중...')return;
+  hc.innerHTML='<span class="spin">⏳</span> AI가 힌트를 생성 중입니다...';
+  try{
+    const workerUrl=localStorage.getItem('worker_url');
+    if(!workerUrl){openModal('apim');hc.innerHTML='⚙️ AI 서버 주소를 먼저 설정해 주세요. 우측 상단 [AI 설정] 버튼을 눌러 입력하세요.';return;}
+    const res=await fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:`초등학교 5~6학년 AI·SW사고력올림피아드 대비 문제입니다.
+
+문제 제목: ${qt}
+문제 내용: ${qbody.substring(0,300)}
+
+이 문제에 대한 힌트를 다음 형식으로 작성해주세요:
+- 답을 직접 알려주지 말고, 핵심 사고 방향과 접근법을 알려주세요.
+- 각 힌트에 구체적인 예시(짧은 예시 1~2줄)를 반드시 포함하세요.
+- 한국어로, 초등학생에게 친근하고 격려하는 말투로 작성해주세요.
+- 총 200자 이내로 간결하게 3가지 힌트만 작성해주세요.
+- 형식: "💡 힌트①: [내용] (예: [짧은 예시])"로 작성해주세요.`}]})});
+    const d=await res.json();
+    hc.innerHTML=(d.content?.[0]?.text||'힌트를 불러오지 못했습니다.').replace(/\n/g,'<br>');
+  }catch(e){
+    hc.innerHTML='💡 힌트①: 문제에서 핵심 조건을 먼저 찾아보세요. (예: "최대 10kg"이면 무게 제한이 핵심!)<br>💡 힌트②: 순서도나 표로 정리하면 논리가 보여요. (예: 조건 → Yes/No 분기로 표현)<br>💡 힌트③: 실생활 비유를 활용해 보세요. (예: 알고리즘 = 요리 레시피처럼 순서가 중요!)';
+  }
+}
+
+// ── AI 평가 ────────────────────────────────────────────────────────────────
+async function evalAnswer(aid, label, qtext){
+  const ta=document.getElementById('a_'+aid);
+  const ep=document.getElementById('ep_'+aid);
+  const eb=document.getElementById('eb_'+aid);
+  if(!ta||!ep)return;
+  const userAns=ta.value.trim();
+  if(userAns.length<10){alert('답안을 10자 이상 작성한 후 평가를 요청해 주세요!');return;}
+  ep.classList.add('vis');
+  ep.innerHTML=`<div class="eval-header">🤖 AI 평가 결과</div><div class="eval-loading"><span class="spin">⏳</span> Claude AI가 답안을 분석 중입니다...</div>`;
+  eb.disabled=true;
+  try{
+    const workerUrl=localStorage.getItem('worker_url');
+    if(!workerUrl){ep.innerHTML=`<div class="eval-header">⚙️ AI 서버 주소 필요</div><div style="color:var(--tx2);font-size:13px;">AI 평가 기능을 사용하려면 Worker 주소를 설정해 주세요.<br><button onclick="openModal('apim')" style="margin-top:8px;padding:6px 14px;border-radius:14px;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer;font-size:12px;font-family:'Noto Sans KR';">⚙️ AI 설정하기</button></div>`;ep.classList.add('vis');eb.disabled=false;return;}
+    const res=await fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,messages:[{role:'user',content:`초등학교 5~6학년 AI·SW사고력올림피아드 채점 기준으로 아래 답안을 평가해주세요.
+
+소문항 번호: ${label}
+소문항 질문: ${qtext}
+학생 답안: ${userAns}
+
+아래 형식으로 평가해주세요 (한국어, 초등학생에게 친근하고 격려하는 말투):
+
+⭐ 점수: X / 10점
+(올림피아드 기준: 창의성, 논리성, 구체성, 완성도 기준으로 채점)
+
+✅ 잘한 점:
+[구체적으로 무엇이 좋았는지 2~3문장]
+
+💡 보완할 점:
+[무엇을 추가하거나 고치면 좋을지 2~3문장, 구체적인 예시 포함]
+
+📝 추가하면 좋을 내용:
+[더 높은 점수를 받기 위해 넣을 수 있는 핵심 내용 1~2가지, 예시 포함]
+
+격려 한마디:
+[짧은 응원 메시지]`}]})});
+    const d=await res.json();
+    const raw=d.content?.[0]?.text||'';
+    const scoreM=raw.match(/⭐\s*점수:\s*([\d.]+)\s*\/\s*10/);
+    const score=scoreM?parseFloat(scoreM[1]):null;
+    const stars=score?'⭐'.repeat(Math.round(score/2)):'';
+    ep.innerHTML=`<div class="eval-header">🤖 AI 평가 결과 — ${label}</div>
+      ${score!==null?`<div class="eval-score">
+        <div class="eval-score-num">${score}</div>
+        <div><div class="eval-stars">${stars}</div><div class="eval-score-label">/ 10점 (올림피아드 기준)</div></div>
+      </div>`:''}
+      <div style="font-size:13px;line-height:1.85;color:var(--tx);white-space:pre-line;">${raw.replace(/⭐[^\n]*\n?/,'').trim()}</div>
+      <button style="margin-top:12px;padding:6px 14px;border-radius:14px;border:1px solid var(--brd);background:transparent;color:var(--tx2);cursor:pointer;font-size:11px;font-family:'Noto Sans KR';" onclick="this.closest('.eval-panel').classList.remove('vis');document.getElementById('eb_${aid}').disabled=false;">✕ 닫기</button>`;
+  }catch(e){
+    ep.innerHTML=`<div class="eval-header">🤖 AI 평가</div><div style="color:var(--tx2);font-size:13px;">평가를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</div>
+      <button style="margin-top:10px;padding:6px 14px;border-radius:14px;border:1px solid var(--brd);background:transparent;color:var(--tx2);cursor:pointer;font-size:11px;" onclick="this.closest('.eval-panel').classList.remove('vis');document.getElementById('eb_${aid}').disabled=false;">✕ 닫기</button>`;
+  }
+  eb.disabled=false;
+}
+
+function setT(min){timerSec=min*60;document.querySelectorAll('.tb').forEach(b=>b.classList.remove('sel'));event.target.classList.add('sel');document.getElementById('th').value=Math.floor(min/60);document.getElementById('tm').value=min%60;}
+function startT(){const h=parseInt(document.getElementById('th').value)||0;const m=parseInt(document.getElementById('tm').value)||0;timerSec=h*3600+m*60;if(timerSec<=0)return;closeModal('tmm');document.getElementById('td').style.display='block';document.getElementById('tsb').style.display='flex';updTD();startTimer();}
+function toggleTimer(){if(timerRunning){clearInterval(timerInt);timerRunning=false;document.getElementById('tsb').textContent='▶';}else startTimer();}
+function startTimer(){timerRunning=true;document.getElementById('tsb').textContent='⏸';timerInt=setInterval(()=>{timerSec--;updTD();if(timerSec<=0){clearInterval(timerInt);timerRunning=false;document.getElementById('tsb').textContent='▶';alert('⏰ 시간이 종료되었습니다!');}},1000);}
+function updTD(){const d=document.getElementById('td');const h=Math.floor(timerSec/3600),m=Math.floor((timerSec%3600)/60),s=timerSec%60;d.textContent=h>0?`${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`:`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;d.classList.toggle('w',timerSec<=300&&timerSec>0);}
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.mo').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
+function showToast(){const t=document.getElementById('toast');t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1500);}
+render();
+</script>
+</body>
+</html>
