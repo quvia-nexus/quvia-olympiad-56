@@ -221,9 +221,33 @@ header{position:sticky;top:0;z-index:100;background:rgba(7,26,20,0.93);backdrop-
 .sh-c{padding:2px 9px;border-radius:18px;background:rgba(255,255,255,0.08);font-size:11px;color:var(--tx2);}
 @media print{header,#fb,.mn,#sn,.qm,.qa,.hp,.eval-panel,.eval-btn{display:none!important;}body{background:#fff;color:#000;}.qc{border:1px solid #ccc;break-inside:avoid;}.aa{min-height:110px;border:1px solid #aaa;background:#fff;}.qbody-text,.st{color:#000;}}
 @media(max-width:600px){.hi .gbadge{display:none;}.fb span{display:none;}#fb{padding:8px 12px;gap:6px;}.feat-name{width:80px;}}
+/* ── 비밀번호 모달 ── */
+#pw-overlay{position:fixed;inset:0;z-index:9999;background:rgba(7,17,13,0.97);display:flex;align-items:center;justify-content:center;}
+#pw-overlay.hidden{display:none;}
+.pw-box{background:#1F2937;border:1px solid rgba(0,208,132,0.25);border-radius:18px;padding:40px 36px;width:340px;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,0.5);}
+.pw-logo{font-size:22px;font-weight:900;background:linear-gradient(135deg,#00D084,#4FFFDB);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px;}
+.pw-sub{font-size:12px;color:#7DB89A;margin-bottom:28px;}
+.pw-label{font-size:12px;color:#7DB89A;text-align:left;margin-bottom:6px;}
+.pw-input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(0,208,132,0.2);background:rgba(255,255,255,0.05);color:#DFF5EC;font-size:15px;font-family:'Noto Sans KR';letter-spacing:2px;outline:none;transition:border .2s;}
+.pw-input:focus{border-color:#00D084;}
+.pw-err{font-size:12px;color:#FF4F6B;margin-top:8px;min-height:18px;}
+.pw-btn{margin-top:18px;width:100%;padding:13px;border-radius:10px;border:none;background:linear-gradient(135deg,#00D084,#00A866);color:#fff;font-size:15px;font-weight:700;font-family:'Noto Sans KR';cursor:pointer;transition:opacity .2s;}
+.pw-btn:hover{opacity:.85;}
+.pw-btn:disabled{opacity:.5;cursor:not-allowed;}
 </style>
 </head>
 <body>
+<!-- ── 비밀번호 입력 모달 ── -->
+<div id="pw-overlay">
+  <div class="pw-box">
+    <div class="pw-logo">🔐 Quvia-Lab</div>
+    <div class="pw-sub">AI·SW사고력올림피아드 대비 학습 사이트</div>
+    <div class="pw-label">비밀번호를 입력하세요</div>
+    <input class="pw-input" id="pw-input" type="password" placeholder="••••••••" maxlength="30" autocomplete="off">
+    <div class="pw-err" id="pw-err"></div>
+    <button class="pw-btn" id="pw-btn" onclick="checkPassword()">입장하기</button>
+  </div>
+</div>
 <header>
   <div class="hi">
     <div class="logo">🟢 AI·SW사고력올림피아드</div>
@@ -1068,7 +1092,7 @@ async function toggleHint(id){
   hc.innerHTML='<span class="spin">⏳</span> AI가 힌트를 생성 중입니다...';
   try{
     const workerUrl=localStorage.getItem('worker_url')||'/api/proxy';
-    const res=await fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({accessToken:'quvia2025',model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:`초등학교 5~6학년 AI·SW사고력올림피아드 대비 문제입니다.
+    const res=await fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({accessToken:getToken(),model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:`초등학교 5~6학년 AI·SW사고력올림피아드 대비 문제입니다.
 
 문제 제목: ${qt}
 문제 내용: ${qbody.substring(0,300)}
@@ -1112,7 +1136,7 @@ async function evalAnswer(aid, label, qtext){
       msgContent=prompt;
     }
 
-    const res=await fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({accessToken:'quvia2025',model:'claude-haiku-4-5-20251001',max_tokens:800,messages:[{role:'user',content:msgContent}]})});
+    const res=await fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({accessToken:getToken(),model:'claude-haiku-4-5-20251001',max_tokens:800,messages:[{role:'user',content:msgContent}]})});
     const d=await res.json();
     const raw=d.content?.[0]?.text||'';
     const scoreM=raw.match(/⭐\s*점수:\s*([\d.]+)\s*\/\s*10/);
@@ -1141,6 +1165,48 @@ function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.mo').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
 function showToast(){const t=document.getElementById('toast');t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1500);}
+// ── 비밀번호 확인 ──────────────────────────────────────────────────────────
+(function(){
+  if(sessionStorage.getItem('pw_ok')==='1'){
+    document.getElementById('pw-overlay').classList.add('hidden');
+  }
+})();
+
+document.getElementById('pw-input').addEventListener('keydown',function(e){
+  if(e.key==='Enter') checkPassword();
+});
+
+async function checkPassword(){
+  const input=document.getElementById('pw-input');
+  const btn=document.getElementById('pw-btn');
+  const err=document.getElementById('pw-err');
+  const pw=input.value.trim();
+  if(!pw){err.textContent='비밀번호를 입력해주세요.';return;}
+  btn.disabled=true;
+  btn.textContent='확인 중...';
+  err.textContent='';
+  try{
+    const workerUrl=localStorage.getItem('worker_url')||'/api/proxy';
+    const res=await fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'verify',password:pw})});
+    const d=await res.json();
+    if(d.ok){
+      sessionStorage.setItem('pw_ok','1');
+      sessionStorage.setItem('access_token',pw);
+      document.getElementById('pw-overlay').classList.add('hidden');
+    } else {
+      err.textContent='❌ 비밀번호가 틀렸습니다.';
+      input.value='';
+      input.focus();
+    }
+  }catch(e){
+    err.textContent='⚠️ 서버 연결에 실패했습니다.';
+  }
+  btn.disabled=false;
+  btn.textContent='입장하기';
+}
+
+function getToken(){return sessionStorage.getItem('access_token')||'';}
+
 render();
 checkApiKey();
 </script>
