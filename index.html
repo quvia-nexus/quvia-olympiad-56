@@ -334,17 +334,17 @@ header{position:sticky;top:0;z-index:100;background:rgba(7,26,20,0.93);backdrop-
   <div class="mh"><div class="mt">⚙️ AI 서버 연결 설정</div><button class="mc" onclick="closeModal('apim')">✕</button></div>
   <div class="mb">
     <p style="color:var(--tx2);font-size:13px;line-height:1.7;margin-bottom:16px;">
-      선생님이 알려주신 <strong style="color:var(--cy);">Cloudflare Worker 주소</strong>를 입력하면<br>
-      💡 AI 힌트와 🤖 AI 평가 기능을 사용할 수 있습니다.
+      AI 힌트와 🤖 AI 평가 기능은 <strong style="color:var(--cy);">기본 서버가 자동으로 연결</strong>되어 있습니다.<br>
+      선생님이 별도 서버 주소를 알려주신 경우에만 아래에 입력하세요.
     </p>
-    <div style="font-size:12px;color:var(--tx2);margin-bottom:6px;">Worker 주소 입력:</div>
-    <input id="apikey-input" type="text" placeholder="https://quvia-ai.your-id.workers.dev" 
+    <div style="font-size:12px;color:var(--tx2);margin-bottom:6px;">별도 서버 주소 (선택사항):</div>
+    <input id="apikey-input" type="text" placeholder="비워두면 기본 서버 자동 사용" 
       style="width:100%;padding:10px 14px;background:rgba(255,255,255,0.06);border:1px solid var(--brd);border-radius:8px;color:var(--tx);font-size:13px;font-family:'JetBrains Mono';margin-bottom:12px;">
-    <button class="fb em" style="width:100%;justify-content:center;padding:12px;" onclick="saveApiKey()">✅ 저장하고 사용하기</button>
+    <button class="fb em" style="width:100%;justify-content:center;padding:12px;" onclick="saveApiKey()">✅ 저장하기</button>
     <div id="apikey-status" style="margin-top:10px;font-size:12px;text-align:center;"></div>
     <div style="margin-top:14px;padding:12px;background:rgba(79,255,219,0.05);border:1px solid rgba(79,255,219,0.15);border-radius:8px;font-size:12px;color:var(--tx2);line-height:1.7;">
-      <strong style="color:var(--cy);">Worker 주소가 없어도 괜찮아요!</strong><br>
-      문제 학습, 답안 작성, 북마크, 타이머, 인쇄 기능은<br>주소 없이도 정상적으로 사용할 수 있습니다.
+      <strong style="color:var(--cy);">주소 없이도 모든 AI 기능 사용 가능합니다!</strong><br>
+      문제 학습, 답안 작성, 북마크, 타이머, 인쇄 기능도<br>정상적으로 사용할 수 있습니다.
     </div>
   </div>
 </div>
@@ -760,27 +760,19 @@ let ans=JSON.parse(localStorage.getItem('ans56')||'{}');
 function updateDday(){const t=new Date('2026-06-20T13:00:00+09:00')-new Date();const d=Math.ceil(t/86400000);document.getElementById('cd').textContent=d>0?d:(d===0?'당일!':'종료');}
 updateDday();setInterval(updateDday,60000);
 
-function sw(sec,el){curSec=sec;document.querySelectorAll('.nt').forEach(b=>b.classList.remove('active'));el.classList.add('active');document.getElementById('sn').style.display=sec==='past'?'block':'none';if(sec==='past')buildRN();function saveApiKey(){
+function sw(sec,el){curSec=sec;document.querySelectorAll('.nt').forEach(b=>b.classList.remove('active'));el.classList.add('active');document.getElementById('sn').style.display=sec==='past'?'block':'none';if(sec==='past')buildRN();render();checkApiKey();}
+
+function saveApiKey(){
   const url=document.getElementById('apikey-input').value.trim();
-  if(!url.startsWith('https://')){
-    document.getElementById('apikey-status').innerHTML='<span style="color:var(--red);">⚠️ 올바른 주소 형식이 아닙니다 (https://... 로 시작해야 합니다)</span>';
-    return;
-  }
   localStorage.setItem('worker_url', url);
-  document.getElementById('apikey-status').innerHTML='<span style="color:var(--gr);">✓ AI 서버 주소가 저장되었습니다!</span>';
+  document.getElementById('apikey-status').innerHTML='<span style="color:var(--gr);">✓ 저장되었습니다! (비워두면 기본 AI 서버 사용)</span>';
   document.getElementById('apikey-banner').style.display='none';
   setTimeout(()=>closeModal('apim'),1200);
 }
 function checkApiKey(){
   const url=localStorage.getItem('worker_url');
-  if(!url) document.getElementById('apikey-banner').style.display='block';
-  else {
-    const inp=document.getElementById('apikey-input');
-    if(inp) inp.value=url;
-  }
+  if(url){const inp=document.getElementById('apikey-input');if(inp)inp.value=url;}
 }
-render();
-checkApiKey();}
 function buildRN(){const nav=document.getElementById('rn');nav.innerHTML='';PAST.forEach(p=>{const b=document.createElement('button');b.className='sb'+(p.round===curRound?' active':'');b.textContent=`제${p.round}회`;b.onclick=()=>{curRound=p.round;buildRN();render();};nav.appendChild(b);});}
 
 function render(){
@@ -894,8 +886,7 @@ async function toggleHint(id){
   if(hc.innerHTML!=='로딩 중...')return;
   hc.innerHTML='<span class="spin">⏳</span> AI가 힌트를 생성 중입니다...';
   try{
-    const workerUrl=localStorage.getItem('worker_url');
-    if(!workerUrl){openModal('apim');hc.innerHTML='⚙️ AI 서버 주소를 먼저 설정해 주세요. 우측 상단 [AI 설정] 버튼을 눌러 입력하세요.';return;}
+    const workerUrl=localStorage.getItem('worker_url')||'/api/proxy';
     const res=await fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:`초등학교 5~6학년 AI·SW사고력올림피아드 대비 문제입니다.
 
 문제 제목: ${qt}
@@ -926,8 +917,7 @@ async function evalAnswer(aid, label, qtext){
   ep.innerHTML=`<div class="eval-header">🤖 AI 평가 결과</div><div class="eval-loading"><span class="spin">⏳</span> Claude AI가 답안을 분석 중입니다...</div>`;
   eb.disabled=true;
   try{
-    const workerUrl=localStorage.getItem('worker_url');
-    if(!workerUrl){ep.innerHTML=`<div class="eval-header">⚙️ AI 서버 주소 필요</div><div style="color:var(--tx2);font-size:13px;">AI 평가 기능을 사용하려면 Worker 주소를 설정해 주세요.<br><button onclick="openModal('apim')" style="margin-top:8px;padding:6px 14px;border-radius:14px;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer;font-size:12px;font-family:'Noto Sans KR';">⚙️ AI 설정하기</button></div>`;ep.classList.add('vis');eb.disabled=false;return;}
+    const workerUrl=localStorage.getItem('worker_url')||'/api/proxy';
     const res=await fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,messages:[{role:'user',content:`초등학교 5~6학년 AI·SW사고력올림피아드 채점 기준으로 아래 답안을 평가해주세요.
 
 소문항 번호: ${label}
@@ -979,6 +969,7 @@ function closeModal(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.mo').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
 function showToast(){const t=document.getElementById('toast');t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1500);}
 render();
+checkApiKey();
 </script>
 </body>
 </html>
