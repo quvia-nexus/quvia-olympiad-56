@@ -141,6 +141,14 @@ header{position:sticky;top:0;z-index:100;background:rgba(7,26,20,0.93);backdrop-
 .eval-block-title.add{color:var(--pu);}
 .eval-block-body{font-size:12.5px;color:var(--tx2);line-height:1.75;padding-left:16px;}
 .eval-loading{color:var(--tx2);font-style:italic;display:flex;align-items:center;gap:8px;}
+/* IMAGE UPLOAD */
+.img-upload-area{margin-top:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.img-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:14px;border:1px solid rgba(79,255,219,0.3);background:rgba(79,255,219,0.08);color:var(--cy);cursor:pointer;font-size:11px;font-family:'Noto Sans KR';font-weight:600;transition:all .2s;}
+.img-btn:hover{background:rgba(79,255,219,0.18);border-color:var(--cy);}
+.img-preview-wrap{position:relative;display:inline-block;}
+.img-preview{max-width:180px;max-height:120px;border-radius:8px;border:1px solid var(--brd);object-fit:cover;display:block;}
+.img-del{position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:var(--red);color:#fff;border:none;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;}
+.img-mode-tag{font-size:10px;color:var(--cy);background:rgba(79,255,219,0.1);border:1px solid rgba(79,255,219,0.2);border-radius:10px;padding:2px 8px;}
 .spin{display:inline-block;animation:spin .8s linear infinite;}
 @keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
 /* FLOAT BAR */
@@ -773,6 +781,11 @@ function renderCard(q,pre){
       <div class="ans-row">
         <textarea class="aa" id="a_${aid}" placeholder="여기에 답을 작성하세요... 자동 저장됩니다 ✓" oninput="saveA('${aid}',this.value)">${sv}</textarea>
       </div>
+      <div class="img-upload-area">
+        <label class="img-btn" for="imginput_${aid}">📷 손글씨 사진 업로드</label>
+        <input type="file" id="imginput_${aid}" accept="image/*" style="display:none" onchange="handleImg('${aid}',this)">
+        <div id="imgwrap_${aid}"></div>
+      </div>
       <div class="ans-bottom">
         <div class="cc" id="c_${aid}">${sv.length}자</div>
         <button class="eval-btn" id="eb_${aid}" onclick="evalAnswer('${aid}','${s.l}','${s.t.replace(/'/g,"\'").replace(/\n/g,' ')}')">🤖 AI 평가받기</button>
@@ -834,6 +847,31 @@ function getTQ(){let t=0;PAST.forEach(r=>r.qs.forEach(q=>t+=q.subs.length));AI_Q
 function getDQ(){return Object.values(ans).filter(v=>v.trim().length>10).length;}
 function updateProgress(){const tot=getTQ(),dn=getDQ(),pct=tot?dn/tot:0;const off=94.25*(1-pct);const ci=document.getElementById('pc');const ti=document.getElementById('pt');if(ci)ci.style.strokeDashoffset=off;if(ti)ti.textContent=Math.round(pct*100)+'%';}
 
+// ── 이미지 업로드 처리 ────────────────────────────────────────────────────────
+const imgData={};
+function handleImg(aid,input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const b64=e.target.result.split(',')[1];
+    const mime=file.type||'image/jpeg';
+    imgData[aid]={b64,mime};
+    const wrap=document.getElementById('imgwrap_'+aid);
+    wrap.innerHTML=`<div class="img-preview-wrap">
+      <img class="img-preview" src="${e.target.result}">
+      <button class="img-del" onclick="delImg('${aid}')">✕</button>
+    </div><span class="img-mode-tag">📷 사진 첨부됨</span>`;
+  };
+  reader.readAsDataURL(file);
+}
+function delImg(aid){
+  delete imgData[aid];
+  const wrap=document.getElementById('imgwrap_'+aid);
+  if(wrap)wrap.innerHTML='';
+  const inp=document.getElementById('imginput_'+aid);
+  if(inp)inp.value='';
+}
+
 // ── AI 힌트 (구체적 예시 포함) ──────────────────────────────────────────────
 async function toggleHint(id){
   const panel=document.getElementById('hp_'+id);if(!panel)return;
@@ -847,7 +885,7 @@ async function toggleHint(id){
   hc.innerHTML='<span class="spin">⏳</span> AI가 힌트를 생성 중입니다...';
   try{
     const workerUrl=localStorage.getItem('worker_url')||'/api/proxy';
-    const res=await fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:600,messages:[{role:'user',content:`초등학교 5~6학년 AI·SW사고력올림피아드 대비 문제입니다.
+    const res=await fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:`초등학교 5~6학년 AI·SW사고력올림피아드 대비 문제입니다.
 
 문제 제목: ${qt}
 문제 내용: ${qbody.substring(0,300)}
@@ -872,40 +910,32 @@ async function evalAnswer(aid, label, qtext){
   const eb=document.getElementById('eb_'+aid);
   if(!ta||!ep)return;
   const userAns=ta.value.trim();
-  if(userAns.length<10){alert('답안을 10자 이상 작성한 후 평가를 요청해 주세요!');return;}
+  const hasImg=!!imgData[aid];
+  if(!hasImg && userAns.length<10){alert('답안을 10자 이상 작성하거나 손글씨 사진을 업로드해 주세요!');return;}
   ep.classList.add('vis');
   ep.innerHTML=`<div class="eval-header">🤖 AI 평가 결과</div><div class="eval-loading"><span class="spin">⏳</span> Claude AI가 답안을 분석 중입니다...</div>`;
   eb.disabled=true;
   try{
     const workerUrl=localStorage.getItem('worker_url')||'/api/proxy';
-    const res=await fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:800,messages:[{role:'user',content:`초등학교 5~6학년 AI·SW사고력올림피아드 채점 기준으로 아래 답안을 평가해주세요.
+    const prompt=`초등학교 5~6학년 AI·SW사고력올림피아드 채점 기준으로 아래 답안을 평가해주세요.\n\n소문항 번호: ${label}\n소문항 질문: ${qtext}${userAns?'\n학생 답안(타이핑): '+userAns:''}\n${hasImg?'\n[첨부된 손글씨 이미지를 읽고 평가해주세요.]':''}\n\n아래 형식으로 평가해주세요 (한국어, 초등학생에게 친근하고 격려하는 말투):\n\n⭐ 점수: X / 10점\n(올림피아드 기준: 창의성, 논리성, 구체성, 완성도 기준으로 채점)\n\n✅ 잘한 점:\n[구체적으로 무엇이 좋았는지 2~3문장]\n\n💡 보완할 점:\n[무엇을 추가하거나 고치면 좋을지 2~3문장, 구체적인 예시 포함]\n\n📝 추가하면 좋을 내용:\n[더 높은 점수를 받기 위해 넣을 수 있는 핵심 내용 1~2가지, 예시 포함]\n\n격려 한마디:\n[짧은 응원 메시지]`;
 
-소문항 번호: ${label}
-소문항 질문: ${qtext}
-학생 답안: ${userAns}
+    let msgContent;
+    if(hasImg){
+      msgContent=[
+        {type:'image',source:{type:'base64',media_type:imgData[aid].mime,data:imgData[aid].b64}},
+        {type:'text',text:prompt}
+      ];
+    } else {
+      msgContent=prompt;
+    }
 
-아래 형식으로 평가해주세요 (한국어, 초등학생에게 친근하고 격려하는 말투):
-
-⭐ 점수: X / 10점
-(올림피아드 기준: 창의성, 논리성, 구체성, 완성도 기준으로 채점)
-
-✅ 잘한 점:
-[구체적으로 무엇이 좋았는지 2~3문장]
-
-💡 보완할 점:
-[무엇을 추가하거나 고치면 좋을지 2~3문장, 구체적인 예시 포함]
-
-📝 추가하면 좋을 내용:
-[더 높은 점수를 받기 위해 넣을 수 있는 핵심 내용 1~2가지, 예시 포함]
-
-격려 한마디:
-[짧은 응원 메시지]`}]})});
+    const res=await fetch(workerUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:800,messages:[{role:'user',content:msgContent}]})});
     const d=await res.json();
     const raw=d.content?.[0]?.text||'';
     const scoreM=raw.match(/⭐\s*점수:\s*([\d.]+)\s*\/\s*10/);
     const score=scoreM?parseFloat(scoreM[1]):null;
     const stars=score?'⭐'.repeat(Math.round(score/2)):'';
-    ep.innerHTML=`<div class="eval-header">🤖 AI 평가 결과 — ${label}</div>
+    ep.innerHTML=`<div class="eval-header">🤖 AI 평가 결과 — ${label}${hasImg?' 📷':''}</div>
       ${score!==null?`<div class="eval-score">
         <div class="eval-score-num">${score}</div>
         <div><div class="eval-stars">${stars}</div><div class="eval-score-label">/ 10점 (올림피아드 기준)</div></div>
