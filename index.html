@@ -203,7 +203,6 @@ header{position:sticky;top:0;z-index:100;background:rgba(7,26,20,0.93);backdrop-
     <div class="gbadge">초등학교 5~6학년</div>
     <div class="hr2">
       <div class="dday">📅 D-<span id="cd">—</span></div>
-      <button class="hbtn" onclick="openModal('apim')">⚙️ AI 설정</button>
       <button class="hbtn" onclick="openModal('fcm')">📐 순서도 가이드</button>
       <button class="hbtn" onclick="window.print()">🖨️ 인쇄</button>
     </div>
@@ -819,7 +818,7 @@ function renderHome(){
         <tr><td class="feat-icon-cell">📐</td><td class="feat-name">순서도 가이드</td><td class="feat-desc">순서도 작성에 필요한 5가지 기호(타원·직사각형·마름모·평행사변형·화살표)의 의미와 실전 예시, 시험 꿀팁을 한눈에 확인할 수 있습니다. 화면 하단 초록 버튼 또는 우측 상단 버튼으로 열 수 있습니다.</td></tr>
         <tr><td class="feat-icon-cell">⏱️</td><td class="feat-name">타이머</td><td class="feat-desc">실전 시험처럼 시간을 정해 두고 문제를 풀 수 있습니다. 30분·1시간·1시간30분·2시간 중 빠르게 선택하거나 직접 입력할 수 있습니다. 남은 시간이 5분 이하가 되면 빨간색으로 깜빡여 알려줍니다.</td></tr>
         <tr><td class="feat-icon-cell">💡</td><td class="feat-name">AI 힌트</td><td class="feat-desc">각 문제 우측 상단의 💡 버튼을 누르면 Claude AI가 핵심 사고 방향, 구체적인 예시, 접근법을 힌트로 제공합니다. 답을 직접 알려주는 것이 아닌, 스스로 생각할 수 있도록 방향을 안내해 줍니다.</td></tr>
-        <tr><td class="feat-icon-cell">🤖</td><td class="feat-name">AI 평가</td><td class="feat-desc">각 소문항 답안 작성 후 <em>🤖 AI 평가받기</em> 버튼을 누르면 Claude AI가 점수(10점 만점), 잘한 점, 보완할 점, 추가하면 좋을 내용을 구체적으로 안내해 줍니다. 사용하려면 선생님이 알려주신 AI 서버 주소를 ⚙️ AI 설정 버튼에서 입력하세요.</td></tr>
+        <tr><td class="feat-icon-cell">🤖</td><td class="feat-name">AI 평가</td><td class="feat-desc">각 소문항 답안 작성 후 <em>🤖 AI 평가받기</em> 버튼을 누르면 Claude AI가 점수(10점 만점), 잘한 점, 보완할 점, 추가하면 좋을 내용을 구체적으로 안내해 줍니다. AI 기능은 자동으로 연결됩니다.</td></tr>
         <tr><td class="feat-icon-cell">🔖</td><td class="feat-name">북마크</td><td class="feat-desc">어렵거나 나중에 다시 풀어보고 싶은 문제는 🔖 버튼을 눌러 표시해 두세요. 북마크된 문제는 금색 테두리로 표시되며, 새로고침해도 기억됩니다.</td></tr>
         <tr><td class="feat-icon-cell">💾</td><td class="feat-name">자동 저장</td><td class="feat-desc">각 문제의 답안 칸에 내용을 입력하면 자동으로 저장됩니다. 브라우저를 닫았다가 다시 열어도 이전에 작성한 답안이 그대로 남아 있습니다.</td></tr>
         <tr><td class="feat-icon-cell">📊</td><td class="feat-name">진행률 표시</td><td class="feat-desc">화면 하단 중앙의 원형 그래프가 전체 문제 중 답안을 작성한 문제의 비율을 실시간으로 보여줍니다. (10자 이상 작성한 문제 기준)</td></tr>
